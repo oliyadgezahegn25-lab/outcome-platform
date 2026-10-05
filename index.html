@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outcome — Make It Happen</title>
+  <meta name="description" content="Turn what you want to happen into a clear, actionable plan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#"><span class="brand-mark">O</span><span>outcome</span></a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#outcomes">Explore outcomes</a>
+    </nav>
+    <button class="nav-button" id="startTop">Start something</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="eyebrow"><span></span> AI that turns intention into action</div>
+      <h1>What do you want<br><em>to make happen?</em></h1>
+      <p class="hero-copy">You bring the goal. We help figure out the how — turning an idea into a clear plan, the right actions, and eventually a real-world result.</p>
+      <button class="primary-button" id="startHero">Tell us what you want <span>→</span></button>
+      <div class="hero-note">No complicated setup. Start with an outcome.</div>
+    </section>
+
+    <section class="outcomes-section" id="outcomes">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow small">Choose an outcome</span>
+          <h2>Start with what you want to happen.</h2>
+        </div>
+        <p>Don't worry about knowing the steps. That's the part we help with.</p>
+      </div>
+      <div class="outcome-grid" id="outcomeGrid"></div>
+    </section>
+
+    <section class="how" id="how">
+      <span class="eyebrow small">The idea</span>
+      <h2>From intention to outcome.</h2>
+      <div class="flow">
+        <div class="flow-card"><strong>01</strong><span class="flow-icon">💭</span><h3>You say what you want.</h3><p>Give us the goal, even if you don't know how to achieve it.</p></div>
+        <div class="flow-line">→</div>
+        <div class="flow-card"><strong>02</strong><span class="flow-icon">✦</span><h3>AI figures out the how.</h3><p>Your goal becomes a structured plan with steps, dependencies and decisions.</p></div>
+        <div class="flow-line">→</div>
+        <div class="flow-card"><strong>03</strong><span class="flow-icon">✓</span><h3>You make it happen.</h3><p>Track the plan, approve important actions and move toward the result.</p></div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div>
+        <span class="eyebrow small">Your next outcome</span>
+        <h2>Don't search for the answer.<br><em>Start with the result.</em></h2>
+      </div>
+      <button class="primary-button" id="startBottom">Start something <span>→</span></button>
+    </section>
+  </main>
+
+  <footer><span>© 2026 Outcome</span><span>Intention → Plan → Action → Result</span></footer>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
