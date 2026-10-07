@@ -267,3 +267,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .header-cinema-info strong,.header-cinema-info a{font:700 11px Manrope;color:#fff}
 .header-cinema-info a:hover{color:#72e1d4}
 @media(max-width:700px){.header-cinema-info{display:grid;grid-template-columns:1fr;margin-bottom:24px}.header-cinema-info>div{min-width:0}.header-cinema-lead{font-size:14px!important}}
+
+/* Refined cinematic hero typography */
+.header-cinema-brandline{display:block!important;font-size:clamp(20px,3vw,38px)!important;line-height:1.08!important;letter-spacing:2.5px!important;font-weight:900!important;color:#fff!important;margin-bottom:28px!important;text-shadow:0 6px 28px rgba(0,0,0,.3)}
+.header-cinema-lead{text-align:justify!important;max-width:700px!important;line-height:1.9!important;margin:0 0 36px!important;word-spacing:.08em}
