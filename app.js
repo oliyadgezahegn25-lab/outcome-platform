@@ -146,3 +146,9 @@ loadProducts();loadInventoryProducts();
  const items=[['01','LABORATORY','EQUIPMENT & SUPPLIES'],['02','SCIENTIFIC','RESEARCH & EQUIPMENT'],['03','MEDICAL','EQUIPMENT & SUPPORT'],['04','TECHNICAL','IT · POWER · INDUSTRIAL']];
  let i=0; setInterval(()=>{i=(i+1)%items.length; n.textContent=items[i][0];t.textContent=items[i][1];sub.textContent=items[i][2];bars.forEach((b,j)=>b.classList.toggle('active',j===i));},3600);
 })();
+
+// Partners page interactions
+(function(){
+ const cards=[...document.querySelectorAll('.partner-card')];
+ cards.forEach((card,i)=>{card.style.setProperty('--partner-delay', (i*90)+'ms');});
+})();
