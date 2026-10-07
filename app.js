@@ -72,35 +72,35 @@ if(quoteForm)quoteForm.addEventListener("submit",async e=>{
  if(error){console.error(error);status.textContent="We couldn't send the request. Please try again.";return}
  e.target.reset();status.textContent="Thank you — your request has been received.";
 });
-const chemicalProducts=[
-"Buffer Solution pH 7","Methanol 99.8% HPLC","Acetone 99%","Acetonitrile AR","Alcohol (Denatured) 70%",
-"Benedict's Solution","Calcium Chloride","Chloroform 99%","Crystal Violet Gram","Dichloromethane 99%",
-"Diethyl Ether 98%","Distilled Water","Ethanol 95%","Ethanol 96% Colorless","Ethanol Absolute 99.6%",
-"Ethyl Acetate 99.8% HPLC","Ethylenediaminetetraacetic Acid (EDTA)","Fehling's Solution","Glycerin 99.7%",
-"Gram Stain Kit","Hand Sanitizer","Hydrochloric Acid 37%","Hydrogen Peroxide 3%","M-30D Diluent 20 L",
-"MacConkey Agar Base","Methylene Blue Stain","Modified Rappaport","Nitric Acid 69%","Paraffin Oil",
-"Petroleum Ether","Potassium Bromide","Potassium Hydroxide Flakes 85%","Sodium Chloride 99.5%",
-"Sodium Hydroxide","Sodium Lauryl Sulfate Powder","Sodium Molybdate Dihydrate 98%","Sodium Phosphate Dibasic",
-"Starch Maize","Sulfuric Acid","Talc Fine Powder","Urea Agar Base","Urea Powder","Wright Stain 0.25%"
-].map((name,i)=>({id:"chemical-"+i,name,category:"Laboratory Chemicals & Reagents",sort_order:i,short_description:"Laboratory chemical or reagent available from Labaid Trading PLC."}));
 async function loadInventoryProducts(){
- if(productCategoryNav){
-  const cats=["Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
-  productCategoryNav.innerHTML=cats.map((x,i)=>{const active=(new URLSearchParams(location.search).get("category")||"All Products")===x;const image=categoryImages[x];return `<a class="mini-category ${active?"active":""}" href="products.html${x==="All Products"?"":"?category="+encodeURIComponent(x)}">${image?`<img src="${image}" alt="${esc(x)}">`:`<span class="mini-category-symbol">🧪</span>`}<span>${esc(x)}</span><b>→</b></a>`}).join("");
- }
  if(!productGrid||!location.pathname.endsWith("products.html"))return;
- const wanted=new URLSearchParams(location.search).get("category")||"Laboratory Equipment";
- const featured=[
-  {id:"featured-microscope",name:"Light Optical Microscope",category:"Laboratory Equipment",description:"Optical microscopy equipment for teaching, routine laboratory work and scientific observation.",image:categoryImages["Laboratory Equipment"]},
-  {id:"featured-centrifuge",name:"Benchtop Centrifuge",category:"Laboratory Equipment",description:"Compact laboratory centrifuge for routine sample separation.",image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_Centrifuge.jpg"},
-  {id:"featured-balance",name:"Analytical Balance",category:"Laboratory Equipment",description:"Precision weighing equipment for laboratory measurement and analytical work.",image:"https://img1.17img.cn/17img/images/201911/pic/fe99d0dd-14fe-4461-b592-8a2c12d9a39b.jpg"},
-  {id:"featured-multimeter",name:"Bench-top Digital Multimeter",category:"Research & Scientific Equipment",description:"Precision electrical measurement instrument for laboratory and technical applications.",image:categoryImages["Research & Scientific Equipment"]},
-  {id:"featured-monitor",name:"Patient Monitor",category:"Medical Equipment",description:"Medical monitoring equipment for institutional and clinical environments.",image:categoryImages["Medical Equipment"]}
- ];
- const {data:items,error}=await db.from("products").select("id,name,brand,model,category:product_categories(name),image_url,short_description,description,sort_order").eq("published",true).order("featured",{ascending:false}).order("sort_order").limit(50);
- let products=error||!items?.length?featured:items.map(p=>({...p,category:p.category?.name||p.category}));
- if(wanted!=="All Products"){ products=products.filter(p=>(p.category?.name||p.category)===wanted); if(!products.length && wanted==="Laboratory Chemicals & Reagents") products=chemicalProducts; if(!products.length) products=featured.filter(p=>(p.category?.name||p.category)===wanted); }
- productGrid.innerHTML=products.length?products.map(p=>{const isChemical=p.category==="Laboratory Chemicals & Reagents";const image=p.image_url||productImages[p.name]||categoryImages[p.category];return `<article class="product-card ${isChemical?"chemical-card":""}"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:isChemical?`<div class="chemical-visual"><span>CHEMICAL</span><b>◈</b></div>`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
+ const cats=["Laboratory Equipment & Instruments","Laboratory Chemicals & Reagents","Laboratory Supplies & Microbiology"];
+ const params=new URLSearchParams(location.search);
+ const wanted=params.get("category")||"All Products";
+ const searchInput=document.getElementById("productSearch");
+ const resultCount=document.getElementById("resultCount");
+ const summary=document.getElementById("catalogueSummary");
+ if(productCategoryNav){
+  productCategoryNav.innerHTML=[["All Products",""],...cats.map(x=>[x,x])].map(([x,v],i)=>`<a class="mini-category ${wanted===x?"active":""}" href="products.html${v?"?category="+encodeURIComponent(v):""}"><span class="mini-category-symbol">${i===0?"◈":i===1?"🔬":i===2?"🧪":"🧫"}</span><span>${esc(x)}</span><b>→</b></a>`).join("");
+ }
+ const {data:items,error}=await db.from("products").select("id,name,brand,model,category:product_categories(name),image_url,catalog_url,short_description,description,sort_order").eq("published",true).order("featured",{ascending:false}).order("sort_order");
+ if(error){console.error(error);productGrid.innerHTML='<div class="empty"><strong>Catalogue temporarily unavailable.</strong><br>Please contact Labaid directly.</div>';return}
+ let products=items||[];
+ const apply=()=>{
+  const q=(searchInput?.value||"").trim().toLowerCase();
+  let filtered=products.filter(p=>wanted==="All Products"||(p.category?.name||"")===wanted);
+  if(q)filtered=filtered.filter(p=>[p.name,p.brand,p.model,p.short_description,p.description,p.category?.name].filter(Boolean).join(" ").toLowerCase().includes(q));
+  if(resultCount)resultCount.textContent=`${filtered.length} product${filtered.length===1?"":"s"} shown`;
+  if(summary)summary.textContent=`${products.length} products in the Labaid catalogue — searchable by product, brand, model and category.`;
+  productGrid.innerHTML=filtered.length?filtered.map(p=>{
+    const cat=p.category?.name||"Product", image=p.image_url||productImages[p.name]||categoryImages[cat];
+    const meta=[p.brand,p.model].filter(Boolean).join(" · ");
+    return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<div class="catalogue-visual"><span>${esc(cat==="Laboratory Chemicals & Reagents"?"CHEMICAL":"LABAID")}</span><b>◈</b></div>`}</div><div class="product-body"><span class="tag">${esc(cat)}</span><h3>${esc(p.name)}</h3>${meta?`<div class="product-meta">${esc(meta)}</div>`:""}<p>${esc(p.short_description||p.description||"Available from Labaid Trading PLC for institutional requirements.")}</p>${p.catalog_url?`<a class="product-link" href="${esc(p.catalog_url)}" target="_blank" rel="noopener">View catalogue →</a>`:""} <a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request quotation →</a></div></article>`;
+  }).join(""):'<div class="empty"><strong>No matching products.</strong><br>Try another search or send the specification to Labaid.</div>';
+ };
+ searchInput?.addEventListener("input",apply);
+ document.getElementById("clearSearch")?.addEventListener("click",()=>{if(searchInput)searchInput.value="";apply();});
+ apply();
 }
 loadProducts();loadInventoryProducts();
 /* Hero showcase rotation */
