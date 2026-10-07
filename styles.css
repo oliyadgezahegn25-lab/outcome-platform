@@ -52,3 +52,21 @@ body{background:#f3f8f8}
 .chemical-visual:before,.chemical-visual:after{content:"";position:absolute;border:1px solid rgba(66,221,202,.18);border-radius:50%}
 .chemical-visual:before{width:120px;height:120px}.chemical-visual:after{width:175px;height:175px}
 .chemical-visual span{font-size:8px;font-weight:800;z-index:1}.chemical-visual b{font-size:30px;font-weight:500;z-index:1;text-shadow:0 0 18px rgba(66,221,202,.25)}
+
+.service-detail-section{padding:105px 7%;background:#f5faf9}
+.service-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.service-detail-grid>div{padding:28px;border:1px solid #d8e8e6;border-radius:20px;background:linear-gradient(145deg,#fff,#f0f8f7);box-shadow:0 10px 30px rgba(7,35,45,.045);transition:.3s}
+.service-detail-grid>div:hover{transform:translateY(-5px);border-color:rgba(66,221,202,.5);box-shadow:0 20px 45px rgba(7,35,45,.1)}
+.service-detail-grid span{font:800 10px Manrope;color:var(--accent);letter-spacing:1px}
+.service-detail-grid h3{font:800 20px Manrope;margin:22px 0 8px;color:var(--ink)}
+.service-detail-grid p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}
+.service-callout .primary{margin-top:25px}
+.dark-info-section{padding:105px 7%;display:grid;grid-template-columns:1fr 1fr;gap:70px;background:radial-gradient(circle at 80% 30%,rgba(66,221,202,.1),transparent 25%),#061923;color:#fff}
+.dark-info-section h2{font:800 clamp(30px,4vw,52px)/1.06 Manrope;letter-spacing:-2.2px;margin:14px 0}
+.dark-info-section p{color:#a9bdc4;line-height:1.75;font-size:14px;max-width:580px}
+.focus-list{display:grid;gap:10px}
+.focus-list div{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1px solid rgba(100,225,215,.13);border-radius:16px;background:rgba(255,255,255,.035)}
+.focus-list b{font:800 10px Manrope;color:#55decf;letter-spacing:1.5px}.focus-list span{font-size:12px;color:#b6c9ce}
+.page-section{padding:100px 7%}
+@media(max-width:800px){.service-detail-grid{grid-template-columns:1fr 1fr}.dark-info-section{grid-template-columns:1fr}}
+@media(max-width:560px){.service-detail-grid{grid-template-columns:1fr}.page-section{padding:70px 20px}.dark-info-section{padding:75px 20px}}
