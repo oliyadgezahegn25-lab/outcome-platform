@@ -41,6 +41,17 @@ if(quoteForm)quoteForm.addEventListener("submit",async e=>{
  if(error){console.error(error);status.textContent="We couldn't send the request. Please try again.";return}
  e.target.reset();status.textContent="Thank you — your request has been received.";
 });
+const chemicalProducts=[
+"Buffer Solution pH 7","Methanol 99.8% HPLC","Acetone 99%","Acetonitrile AR","Alcohol (Denatured) 70%",
+"Benedict's Solution","Calcium Chloride","Chloroform 99%","Crystal Violet Gram","Dichloromethane 99%",
+"Diethyl Ether 98%","Distilled Water","Ethanol 95%","Ethanol 96% Colorless","Ethanol Absolute 99.6%",
+"Ethyl Acetate 99.8% HPLC","Ethylenediaminetetraacetic Acid (EDTA)","Fehling's Solution","Glycerin 99.7%",
+"Gram Stain Kit","Hand Sanitizer","Hydrochloric Acid 37%","Hydrogen Peroxide 3%","M-30D Diluent 20 L",
+"MacConkey Agar Base","Methylene Blue Stain","Modified Rappaport","Nitric Acid 69%","Paraffin Oil",
+"Petroleum Ether","Potassium Bromide","Potassium Hydroxide Flakes 85%","Sodium Chloride 99.5%",
+"Sodium Hydroxide","Sodium Lauryl Sulfate Powder","Sodium Molybdate Dihydrate 98%","Sodium Phosphate Dibasic",
+"Starch Maize","Sulfuric Acid","Talc Fine Powder","Urea Agar Base","Urea Powder","Wright Stain 0.25%"
+].map((name,i)=>({id:"chemical-"+i,name,category:"Laboratory Chemicals & Reagents",sort_order:i,short_description:"Laboratory chemical or reagent available from Labaid Trading PLC."}));
 async function loadInventoryProducts(){
  if(productCategoryNav){
   const cats=["All Products","Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
@@ -57,7 +68,7 @@ async function loadInventoryProducts(){
  ];
  const {data:items,error}=await db.from("products").select("id,name,brand,model,category:product_categories(name),image_url,short_description,description,sort_order").eq("published",true).order("featured",{ascending:false}).order("sort_order").limit(50);
  let products=error||!items?.length?featured:items.map(p=>({...p,category:p.category?.name||p.category}));
- products=products.filter(p=>wanted==="All Products"||(p.category?.name||p.category)===wanted);
- productGrid.innerHTML=products.length?products.map(p=>{const image=(p.category==="Laboratory Chemicals & Reagents")?null:(categoryImages[p.category]);return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
+ products=products.filter(p=>wanted==="All Products"||(p.category?.name||p.category)===wanted);\n if(wanted==="Laboratory Chemicals & Reagents" && !products.length) products=chemicalProducts;
+ productGrid.innerHTML=products.length?products.map(p=>{const isChemical=p.category==="Laboratory Chemicals & Reagents";const image=isChemical?null:(p.image_url||categoryImages[p.category]);return `<article class="product-card ${isChemical?"chemical-card":""}"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:isChemical?`<div class="chemical-visual"><span>CHEMICAL</span><b>◈</b></div>`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
 }
 loadProducts();loadInventoryProducts();
