@@ -142,3 +142,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .legal-page{padding:70px 20px}.breadcrumb{padding:16px 20px 0}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Chemical product cards */
+.chemical-card{position:relative;border-color:rgba(12,138,130,.18);background:linear-gradient(145deg,#ffffff,#f4fbfa)}
+.chemical-card .product-visual{height:150px;background:radial-gradient(circle at 50% 42%,rgba(70,213,197,.18),transparent 34%),linear-gradient(135deg,#071a25,#0b3442);overflow:hidden}
+.chemical-card .product-visual:before{content:"";position:absolute;width:92px;height:92px;border:1px solid rgba(117,228,215,.42);border-radius:50%;box-shadow:0 0 0 16px rgba(117,228,215,.05),0 0 0 34px rgba(117,228,215,.025)}
+.chemical-card .product-visual:after{content:"";width:54px;height:54px;border:1px dashed rgba(117,228,215,.55);border-radius:50%;position:absolute;z-index:1}
+.chemical-visual{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;color:#a9eee6;font-size:9px;letter-spacing:2px;font-weight:800}
+.chemical-visual b{font:800 26px Manrope;color:#5de0d3;text-shadow:0 0 18px rgba(70,213,197,.55)}
+.chemical-card .product-body{padding:18px 20px 21px}
+.chemical-card .product-body h3{font-size:17px;min-height:42px}
+.chemical-card .product-link{display:inline-flex;margin-top:2px;padding:9px 12px;border-radius:999px;background:#e5f5f2;color:#075f59}
+.chemical-card:hover{border-color:rgba(12,138,130,.42);box-shadow:0 22px 55px rgba(7,26,37,.11)}
+.product-category-nav{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 28px}
+.mini-category{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px 12px;font-size:10px;font-weight:700;color:#52636b;transition:.2s}
+.mini-category:hover,.mini-category.active{border-color:var(--accent);background:var(--soft);color:var(--ink);transform:translateY(-2px)}
+.mini-category-symbol{font-size:17px}.mini-category b{color:var(--accent)}
+.mini-category img{width:25px;height:25px;border-radius:7px;object-fit:cover}
