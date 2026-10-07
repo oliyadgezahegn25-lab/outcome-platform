@@ -258,3 +258,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .header-cinema-dots{right:20px;bottom:58px}
 }
 @media(prefers-reduced-motion:reduce){.header-cinema-slide{transition:opacity .2s ease;transform:none}.header-cinema-slide.active{transform:none}}
+
+/* Homepage identity hero */
+.header-cinema-lead{max-width:720px!important;font-size:16px!important;line-height:1.8!important;color:#e0ecef!important}
+.header-cinema-info{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 30px}
+.header-cinema-info>div{display:flex;flex-direction:column;gap:5px;min-width:185px;padding:12px 15px;border:1px solid rgba(255,255,255,.16);border-radius:12px;background:rgba(2,15,21,.25);backdrop-filter:blur(10px)}
+.header-cinema-info span{font:800 8px Manrope;letter-spacing:1.7px;color:#75dcd1}
+.header-cinema-info strong,.header-cinema-info a{font:700 11px Manrope;color:#fff}
+.header-cinema-info a:hover{color:#72e1d4}
+@media(max-width:700px){.header-cinema-info{display:grid;grid-template-columns:1fr;margin-bottom:24px}.header-cinema-info>div{min-width:0}.header-cinema-lead{font-size:14px!important}}
