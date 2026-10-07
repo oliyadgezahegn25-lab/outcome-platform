@@ -70,3 +70,75 @@ body{background:#f3f8f8}
 .page-section{padding:100px 7%}
 @media(max-width:800px){.service-detail-grid{grid-template-columns:1fr 1fr}.dark-info-section{grid-template-columns:1fr}}
 @media(max-width:560px){.service-detail-grid{grid-template-columns:1fr}.page-section{padding:70px 20px}.dark-info-section{padding:75px 20px}}
+
+/* === Site-wide polish & UX === */
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{overflow-x:hidden}
+::selection{background:rgba(66,221,202,.25);color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid rgba(66,221,202,.7);outline-offset:3px}
+.nav{position:sticky;top:0;z-index:1000;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav-menu{display:none;background:transparent;border:1px solid rgba(100,225,215,.25);color:inherit;border-radius:10px;width:42px;height:42px;font-size:21px}
+.nav-open nav{display:flex}
+.announcement{padding:10px 7%;background:#031018;color:#b9d5db;text-align:center;font-size:11px;letter-spacing:.3px;border-bottom:1px solid rgba(100,225,215,.1)}
+.announcement a{color:#66e4d5;font-weight:800}
+.hero-actions .secondary,.page-hero .secondary{cursor:pointer}
+.trust-row{padding:20px 7%;display:flex;justify-content:center;gap:45px;flex-wrap:wrap;background:#071923;color:#a8c1c7;border-top:1px solid rgba(100,225,215,.08);border-bottom:1px solid rgba(100,225,215,.08)}
+.trust-row span{font:700 10px Manrope;letter-spacing:1.4px;text-transform:uppercase}
+.trust-row b{color:#5de0d1;margin-right:7px}
+.home-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding:90px 7%;background:#f4f9f8}
+.home-panel{padding:38px;border:1px solid #d8e8e6;border-radius:24px;background:linear-gradient(145deg,#fff,#eef8f7);box-shadow:0 18px 50px rgba(7,35,45,.05)}
+.home-panel.dark{background:radial-gradient(circle at 80% 20%,rgba(66,221,202,.1),transparent 30%),#061923;color:#fff;border-color:rgba(100,225,215,.12)}
+.home-panel h3{font:800 25px Manrope;letter-spacing:-1px;margin:10px 0}
+.home-panel p{line-height:1.75;color:#6b7d85;font-size:13px}
+.home-panel.dark p{color:#a9bdc4}
+.home-panel ul{padding:0;margin:25px 0 0;list-style:none;display:grid;gap:12px}
+.home-panel li{display:flex;gap:10px;font-size:12px}
+.home-panel li b{color:var(--accent)}
+.steps{padding:100px 7%;background:#fff}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}
+.step{padding:28px;border:1px solid #dbe8e7;border-radius:20px;background:#f8fbfb;transition:.3s}
+.step:hover{transform:translateY(-5px);box-shadow:0 20px 45px rgba(7,35,45,.08);border-color:rgba(66,221,202,.5)}
+.step-number{font:800 11px Manrope;color:#13968c;letter-spacing:1px}
+.step h3{font:800 18px Manrope;margin:20px 0 8px}
+.step p{font-size:12px;line-height:1.7;color:#718189;margin:0}
+.faq-section{padding:100px 7%;background:#f4f9f8}
+.faq-grid{max-width:900px;margin:35px auto 0;display:grid;gap:10px}
+.faq-grid details{background:#fff;border:1px solid #d9e7e6;border-radius:16px;padding:18px 22px;box-shadow:0 8px 24px rgba(7,35,45,.035)}
+.faq-grid summary{cursor:pointer;font:700 14px Manrope;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq-grid summary::-webkit-details-marker{display:none}
+.faq-grid summary:after{content:"+";color:#0c8a82;font-size:20px}
+.faq-grid details[open] summary:after{content:"−"}
+.faq-grid p{font-size:12px;line-height:1.75;color:#6f8087;margin:14px 0 0;max-width:760px}
+.cta-strip{margin:0 7% 90px;padding:48px 52px;border-radius:26px;background:linear-gradient(135deg,#061923,#0b2a37);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px;box-shadow:0 25px 70px rgba(5,25,34,.18)}
+.cta-strip h2{font:800 clamp(25px,3vw,40px) Manrope;letter-spacing:-1.5px;margin:8px 0}
+.cta-strip p{color:#a8bec5;margin:0;max-width:620px;font-size:13px;line-height:1.7}
+.cta-strip .primary{white-space:nowrap}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+.footer-links a{color:#a9bdc4;font-size:11px}
+.footer-links a:hover{color:#55decf}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.contact-methods{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:25px}
+.contact-method{padding:18px;border:1px solid #d9e8e6;border-radius:16px;background:#f7fbfa}
+.contact-method b{display:block;font:800 10px Manrope;letter-spacing:1px;color:#0b897f;text-transform:uppercase;margin-bottom:7px}
+.contact-method a,.contact-method span{font-size:12px;color:#536870}
+.contact-note{margin-top:20px;font-size:11px!important;color:#7b8c92!important}
+.legal-page{padding:100px 7%;max-width:1100px;margin:auto}
+.legal-page h1{font:800 clamp(35px,5vw,58px)/1.05 Manrope;letter-spacing:-2px}
+.legal-page h2{font:800 24px Manrope;margin-top:45px}
+.legal-page p,.legal-page li{font-size:13px;line-height:1.8;color:#667980}
+.legal-page ul{padding-left:20px}
+.empty-state{padding:40px;border:1px dashed #b8d5d1;border-radius:20px;background:#f7fbfa;color:#6e8087}
+.breadcrumb{padding:20px 7% 0;font-size:11px;color:#7b8c92}
+.breadcrumb a{color:#0b897f}
+@media(max-width:850px){
+ .nav{padding:12px 20px!important}.nav-menu{display:block}.nav>nav{display:none;position:absolute;left:12px;right:12px;top:70px;flex-direction:column;padding:14px;background:#061923;border:1px solid rgba(100,225,215,.15);border-radius:16px;box-shadow:0 25px 60px rgba(0,0,0,.25)}
+ .nav-open>nav{display:flex}.nav-open .nav-menu{color:#55decf}.nav-cta{display:none!important}
+ .steps-grid{grid-template-columns:1fr 1fr}.home-grid{grid-template-columns:1fr}.cta-strip{margin:0 20px 70px;flex-direction:column;align-items:flex-start}
+}
+@media(max-width:560px){
+ .announcement{padding:9px 18px;font-size:10px}.trust-row{gap:18px;padding:17px 20px}.steps{padding:70px 20px}.steps-grid{grid-template-columns:1fr}
+ .home-grid{padding:70px 20px}.home-panel{padding:26px}.contact-methods{grid-template-columns:1fr}
+ .cta-strip{padding:32px 26px}.footer-bottom{align-items:flex-start;flex-direction:column}.footer-links{justify-content:flex-start}
+ .legal-page{padding:70px 20px}.breadcrumb{padding:16px 20px 0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
