@@ -41,4 +41,12 @@ if(quoteForm)quoteForm.addEventListener("submit",async e=>{
  if(error){console.error(error);status.textContent="We couldn't send the request. Please try again.";return}
  e.target.reset();status.textContent="Thank you — your request has been received.";
 });
-loadProducts();
+async function loadInventoryProducts(){
+ if(!productGrid||!location.pathname.endsWith("products.html"))return;
+ const wanted=new URLSearchParams(location.search).get("category");
+ const {data:items,error}=await inventoryDb.from("items").select("id,item_name,brand,model,category,catalog_link").order("item_name");
+ if(error){console.error(error);productGrid.innerHTML='<div class="empty">Products are temporarily unavailable. Please contact Labaid directly.</div>';return}
+ const products=(items||[]).map(i=>({...i,public_category:publicCategory(i)})).filter(i=>!wanted||wanted==="All Products"||i.public_category===wanted);
+ productGrid.innerHTML=products.length?products.map((p,i)=>{const image=categoryImages[p.public_category]||categoryImages["Laboratory Equipment"];return `<article class="product-card"><div class="product-visual"><img class="product-photo" src="${image}" alt="${esc(p.item_name)}"></div><div class="product-body"><span class="tag">${esc(p.public_category)}</span><h3>${esc(p.item_name.trim())}</h3>${p.brand||p.model?`<p class="product-meta">${p.brand?`Brand: ${esc(p.brand)}`:''}${p.model?` · Model: ${esc(p.model)}`:''}</p>`:''}<a class="product-link" href="contact.html?product=${encodeURIComponent(p.item_name.trim())}">Request this product →</a></div></article>`}).join(""):'<div class="empty"><strong>No products are currently listed in this category.</strong><br>Contact Labaid for other product requirements.</div>';
+}
+loadProducts();loadInventoryProducts();
