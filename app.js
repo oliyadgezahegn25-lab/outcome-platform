@@ -34,7 +34,12 @@ const productImages={
 "Hydrochloric Acid":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Hydrochloric_Acid.jpg",
 "Sucrose":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Crystals_of_sucrose.jpg"
 };
-const categoryImages={"Laboratory Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_Centrifuge.jpg","Laboratory Chemicals & Reagents":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_Glasswares.jpg","Research & Scientific Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Multimeter_Lab.jpg","Medical Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Philips_IntelliVue_M3002A_X2_medical_monitor_at_Campbell_County_Memorial_Hospital_in_Gillette%2C_Wyoming.jpg"};
+const categoryImages={
+"Laboratory Equipment":"https://images.pexels.com/photos/9574395/pexels-photo-9574395.jpeg?auto=compress&cs=tinysrgb&w=1600",
+"Laboratory Chemicals & Reagents":"https://images.pexels.com/photos/6129875/pexels-photo-6129875.jpeg?auto=compress&cs=tinysrgb&w=1600",
+"Research & Scientific Equipment":"https://images.pexels.com/photos/8442022/pexels-photo-8442022.jpeg?auto=compress&cs=tinysrgb&w=1600",
+"Medical Equipment":"https://images.pexels.com/photos/31188648/pexels-photo-31188648.jpeg?auto=compress&cs=tinysrgb&w=1600"
+}
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 function card(p){const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name];return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||"Professional equipment and solutions available from Labaid Trading PLC.")}</p><button class="product-link" data-product="${p.id}">View product →</button></div></article>`}
 async function loadProducts(){
