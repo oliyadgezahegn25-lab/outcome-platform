@@ -1,3 +1,14 @@
+
+// Cinematic company presentation
+(function(){
+ const slides=[...document.querySelectorAll('.presentation-slide')],dots=[...document.querySelectorAll('#slideProgress button')],count=document.getElementById('slideCount'),prev=document.getElementById('slidePrev'),next=document.getElementById('slideNext');
+ if(!slides.length)return; let index=0,timer;
+ function show(n){index=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('active',i===index));dots.forEach((d,i)=>d.classList.toggle('active',i===index));if(count)count.textContent=String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+ function restart(){clearInterval(timer);timer=setInterval(()=>show(index+1),7000)}
+ prev&&prev.addEventListener('click',()=>{show(index-1);restart()});next&&next.addEventListener('click',()=>{show(index+1);restart()});dots.forEach(d=>d.addEventListener('click',()=>{show(Number(d.dataset.goto));restart()}));
+ const stage=document.querySelector('.presentation-stage');stage&&stage.addEventListener('mouseenter',()=>clearInterval(timer));stage&&stage.addEventListener('mouseleave',restart);show(0);restart();
+})();
+
 const SUPABASE_URL="https://bpqtmqlnohwqrxdcaiwc.supabase.co";
 const SUPABASE_KEY="sb_publishable__KsZBL-4weWb-a8ZdWGjGA_XHHMG9wH";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
