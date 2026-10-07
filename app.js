@@ -34,8 +34,8 @@ const productImages={
 "Sucrose":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Crystals_of_sucrose.jpg"
 };
 const categoryImages={
-"Laboratory Equipment":"alex-yS3XM9qx3hQ-unsplash.jpg",
-"Laboratory Chemicals & Reagents":"logan-gutierrez-fN6K30xtiKE-unsplash.jpg",
+"Laboratory Equipment":"header one.jpg",
+"Laboratory Chemicals & Reagents":"alex-yS3XM9qx3hQ-unsplash.jpg",
 "Research & Scientific Equipment":"https://images.pexels.com/photos/8442022/pexels-photo-8442022.jpeg?auto=compress&cs=tinysrgb&w=1600",
 "Medical Equipment":"https://images.pexels.com/photos/31188648/pexels-photo-31188648.jpeg?auto=compress&cs=tinysrgb&w=1600"
 }
