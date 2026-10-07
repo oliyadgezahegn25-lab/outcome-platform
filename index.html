@@ -2,28 +2,28 @@
 <div class="announcement">LABORATORY · SCIENTIFIC · MEDICAL · TECHNICAL <a href="contact.html">Start a requirement →</a></div>
 <header class="nav"><a class="brand" href="index.html"><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><span>LABAID <small>TRADING PLC</small></span></a><nav><a class="active" href="index.html">Home</a><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><button class="nav-menu" aria-label="Open menu" aria-expanded="false">☰</button><a class="nav-cta" href="contact.html">Request a Quote <span>→</span></a></header>
 <main>
-<section class="company-intro">
-  <div class="company-intro-copy">
-    <div class="company-name-lockup">LABAID TRADING PLC</div>
-    <div class="company-location">ADDIS ABABA, ETHIOPIA</div>
-    <p class="company-description">Labaid Trading PLC is an Addis Ababa–based supplier serving laboratory, scientific, medical and technical requirements. We help organizations identify suitable products, coordinate supply and support the practical requirements around equipment.</p>
-    <div class="company-contact-row">
-      <a href="tel:+251922428400"><b>PHONE</b><span>+251 922 42 84 00</span></a>
-      <a href="mailto:labaidtrading@gmail.com"><b>EMAIL</b><span>labaidtrading@gmail.com</span></a>
-      <div><b>LOCATION</b><span>Addis Ababa, Ethiopia</span></div>
-    </div>
-    <div class="hero-actions"><a class="primary" href="products.html">Explore products <span>→</span></a><a class="secondary intro-secondary" href="contact.html">Contact Labaid</a></div>
+<section class="header-cinema" aria-label="Labaid visual introduction">
+  <div class="header-cinema-slides">
+    <div class="header-cinema-slide active" style="background-image:url('header one.jpg')"></div>
+    <div class="header-cinema-slide" style="background-image:url('header two.jpg')"></div>
+    <div class="header-cinema-slide" style="background-image:url('header thre.jpg')"></div>
   </div>
-  <div class="company-intro-visual">
-    <div class="intro-grid"></div><div class="intro-glow"></div>
-    <div class="hero-showcase">
-      <div class="showcase-label">LABAID / SUPPLY NETWORK</div>
-      <div class="showcase-orbit orbit-a"></div><div class="showcase-orbit orbit-b"></div>
-      <div class="showcase-core"><span id="heroShowcaseNumber">01</span><strong id="heroShowcaseTitle">LABORATORY</strong><small id="heroShowcaseSub">EQUIPMENT &amp; SUPPLIES</small></div>
-      <div class="showcase-side"><span>SCIENTIFIC</span><span>MEDICAL</span><span>TECHNICAL</span></div>
-      <div class="showcase-progress"><i class="active"></i><i></i><i></i><i></i></div>
+  <div class="header-cinema-overlay"></div>
+  <div class="header-cinema-grid"></div>
+  <div class="header-cinema-content">
+    <span class="eyebrow small">LABAID TRADING PLC · ADDIS ABABA, ETHIOPIA</span>
+    <h1>Equipment that moves<br><em>requirements forward.</em></h1>
+    <p>Laboratory, scientific, medical and technical supply for organizations that need practical solutions.</p>
+    <div class="hero-actions">
+      <a class="primary" href="products.html">Explore products <span>→</span></a>
+      <a class="secondary" href="contact.html">Contact Labaid</a>
     </div>
-    <div class="intro-corner">01 / COMPANY</div>
+  </div>
+  <div class="header-cinema-meta"><span>01 — 03</span><span>LABAID / VISUAL SERIES</span></div>
+  <div class="header-cinema-dots" aria-label="Header slides">
+    <button class="active" data-header-slide="0" aria-label="Show header image one"></button>
+    <button data-header-slide="1" aria-label="Show header image two"></button>
+    <button data-header-slide="2" aria-label="Show header image three"></button>
   </div>
 </section>
 
@@ -59,4 +59,20 @@
   </div>
 </section>
 </main><footer><div class="footer-bottom"><div><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><b>LABAID TRADING PLC</b></div><div class="footer-links"><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="partners.html">Partners</a></div><span>© 2026 Labaid Trading PLC · Addis Ababa, Ethiopia</span></div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script></body></html>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.header-cinema-slide')];
+  const dots=[...document.querySelectorAll('[data-header-slide]')];
+  const counter=document.querySelector('.header-cinema-meta span');
+  let current=0;
+  function show(n){
+    current=(n+slides.length)%slides.length;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+    if(counter) counter.textContent=String(current+1).padStart(2,'0')+' — 03';
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);reset();}));
+  let timer=setInterval(()=>show(current+1),6500);
+  function reset(){clearInterval(timer);timer=setInterval(()=>show(current+1),6500);}
+})();
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script></body></html>
