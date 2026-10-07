@@ -3,9 +3,29 @@ const SUPABASE_KEY="sb_publishable__KsZBL-4weWb-a8ZdWGjGA_XHHMG9wH";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const categoryFilter=document.getElementById("categoryFilter"),categoryGrid=document.getElementById("categoryGrid"),productCategoryNav=document.getElementById("productCategoryNav"),productGrid=document.getElementById("productGrid"),serviceGrid=document.getElementById("serviceGrid"),modal=document.getElementById("productModal"),modalContent=document.getElementById("modalContent");
 const icons=["🧪","🔬","⚗️","⚕️","💻","⚡","⚙️"];
+const productImages={
+"Laboratory Incubator":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_Incubator%3B_from_a_medical_laboratory_in_Abuja%2C_Nigeria.png",
+"Laminar Flow Cabinet":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laminar_Flow_Cabinet_for_Tissue_Culture.jpg",
+"Biological Safety Cabinet":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Biological_Safety_Cabinet_%28Class_II%2C_Type_A2%29_Front_view.jpg",
+"PCR Tube":"https://commons.wikimedia.org/wiki/Special:Redirect/file/PCR_Tubes.jpg",
+"Autoclave":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_autoclave.jpg",
+"Beakers and Laboratory Glassware":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory_beaker.jpg",
+"Rotary Evaporator":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rotary_evaporator2.jpg",
+"Binocular Microscope":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Microscopio_optico_imagem_sem_fundo.png",
+"Petri Dishes":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Petri_dishes.jpg",
+"Acetic Acid":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Acetic_acid.jpg",
+"Sodium Hydroxide":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sodium_hydroxide.jpg",
+"Sodium Chloride":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sodium_chloride.JPG",
+"Potassium Hydroxide":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Potassium_hydroxide.jpg",
+"Calcium Hydroxide":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Calcium_hydroxide.jpg",
+"Ethanol":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sample_of_Absolute_Ethanol.jpg",
+"Sulphuric Acid":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sulfuric_Acid.jpg",
+"Hydrochloric Acid":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Hydrochloric_Acid.jpg",
+"Sucrose":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Crystals_of_sucrose.jpg"
+};
 const categoryImages={"Laboratory Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Microscopio_optico_imagem_sem_fundo.png","Laboratory Chemicals & Reagents":null,"Research & Scientific Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Keithley%20DMM7510%207.5%20Digit%20Bench%20Multimeter%20%2816462850573%29.jpg","Medical Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/PatientMonitor-1.jpg"};
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function card(p){const image=categoryImages[p.category?.name];return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||"Professional equipment and solutions available from Labaid Trading PLC.")}</p><button class="product-link" data-product="${p.id}">View product →</button></div></article>`}
+function card(p){const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name];return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||"Professional equipment and solutions available from Labaid Trading PLC.")}</p><button class="product-link" data-product="${p.id}">View product →</button></div></article>`}
 async function loadProducts(){
  const queries=[
   db.from("product_categories").select("*").eq("published",true).order("sort_order"),
@@ -26,7 +46,7 @@ async function loadProducts(){
 function render(list){if(!productGrid)return;productGrid.innerHTML=list.length?list.map(card).join(""):'<div class="empty"><strong>Products are being added.</strong><br>Contact Labaid for a specific product requirement.</div>';productGrid.querySelectorAll("[data-product]").forEach(b=>b.onclick=()=>openProduct(b.dataset.product))}
 async function openProduct(id){
  const {data:p}=await db.from("products").select("*,category:product_categories(name)").eq("id",id).single();if(!p||!modalContent)return;
- const image=categoryImages[p.category?.name];
+ const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name];
  modalContent.innerHTML=`${image?`<img class="modal-product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:''}<span class="modal-meta">${esc(p.category?.name||"Product")}</span><h2>${esc(p.name)}</h2>${p.brand?`<p><strong>Brand:</strong> ${esc(p.brand)}${p.model?` &nbsp; <strong>Model:</strong> ${esc(p.model)}`:''}</p>`:''}<p>${esc(p.description||p.short_description||"Contact Labaid for product information and availability.")}</p><a class="primary" href="contact.html" onclick="closeModal()">Request a quote <span>→</span></a>`;
  modal.classList.add("open");
 }
@@ -69,6 +89,6 @@ async function loadInventoryProducts(){
  const {data:items,error}=await db.from("products").select("id,name,brand,model,category:product_categories(name),image_url,short_description,description,sort_order").eq("published",true).order("featured",{ascending:false}).order("sort_order").limit(50);
  let products=error||!items?.length?featured:items.map(p=>({...p,category:p.category?.name||p.category}));
  if(wanted!=="All Products"){ products=products.filter(p=>(p.category?.name||p.category)===wanted); if(!products.length && wanted==="Laboratory Chemicals & Reagents") products=chemicalProducts; if(!products.length) products=featured.filter(p=>(p.category?.name||p.category)===wanted); }
- productGrid.innerHTML=products.length?products.map(p=>{const isChemical=p.category==="Laboratory Chemicals & Reagents";const image=isChemical?null:(p.image_url||categoryImages[p.category]);return `<article class="product-card ${isChemical?"chemical-card":""}"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:isChemical?`<div class="chemical-visual"><span>CHEMICAL</span><b>◈</b></div>`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
+ productGrid.innerHTML=products.length?products.map(p=>{const isChemical=p.category==="Laboratory Chemicals & Reagents";const image=p.image_url||productImages[p.name]||categoryImages[p.category];return `<article class="product-card ${isChemical?"chemical-card":""}"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:isChemical?`<div class="chemical-visual"><span>CHEMICAL</span><b>◈</b></div>`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
 }
 loadProducts();loadInventoryProducts();
