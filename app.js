@@ -103,3 +103,10 @@ async function loadInventoryProducts(){
  productGrid.innerHTML=products.length?products.map(p=>{const isChemical=p.category==="Laboratory Chemicals & Reagents";const image=p.image_url||productImages[p.name]||categoryImages[p.category];return `<article class="product-card ${isChemical?"chemical-card":""}"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:isChemical?`<div class="chemical-visual"><span>CHEMICAL</span><b>◈</b></div>`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||p.category||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||p.description||"Professional equipment supplied by Labaid Trading PLC.")}</p><a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request this product →</a></div></article>`}).join(""):`<div class="empty"><strong>No ${esc(wanted)} products are currently listed.</strong><br>More products will be added as the Labaid catalogue is prepared.</div>`;
 }
 loadProducts();loadInventoryProducts();
+/* Hero showcase rotation */
+(function(){
+ const n=document.getElementById('heroShowcaseNumber'),t=document.getElementById('heroShowcaseTitle'),sub=document.getElementById('heroShowcaseSub'),bars=[...document.querySelectorAll('.showcase-progress i')];
+ if(!n)return;
+ const items=[['01','LABORATORY','EQUIPMENT & SUPPLIES'],['02','SCIENTIFIC','RESEARCH & EQUIPMENT'],['03','MEDICAL','EQUIPMENT & SUPPORT'],['04','TECHNICAL','IT · POWER · INDUSTRIAL']];
+ let i=0; setInterval(()=>{i=(i+1)%items.length; n.textContent=items[i][0];t.textContent=items[i][1];sub.textContent=items[i][2];bars.forEach((b,j)=>b.classList.toggle('active',j===i));},3600);
+})();
