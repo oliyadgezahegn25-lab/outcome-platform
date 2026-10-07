@@ -1,7 +1,7 @@
 const SUPABASE_URL="https://bpqtmqlnohwqrxdcaiwc.supabase.co";
 const SUPABASE_KEY="sb_publishable__KsZBL-4weWb-a8ZdWGjGA_XHHMG9wH";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const categoryFilter=document.getElementById("categoryFilter"),categoryGrid=document.getElementById("categoryGrid"),productGrid=document.getElementById("productGrid"),serviceGrid=document.getElementById("serviceGrid"),modal=document.getElementById("productModal"),modalContent=document.getElementById("modalContent");
+const categoryFilter=document.getElementById("categoryFilter"),categoryGrid=document.getElementById("categoryGrid"),productCategoryNav=document.getElementById("productCategoryNav"),productGrid=document.getElementById("productGrid"),serviceGrid=document.getElementById("serviceGrid"),modal=document.getElementById("productModal"),modalContent=document.getElementById("modalContent");
 const icons=["🧪","🔬","⚗️","⚕️","💻","⚡","⚙️"];
 const categoryImages={"Laboratory Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20Microscope.jpg","Laboratory Chemicals & Reagents":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20glassware.jpg","Research & Scientific Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20Optical%20Microscope.jpg","Medical Equipment":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Medical%20monitor.jpg"};
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
@@ -19,7 +19,7 @@ async function loadProducts(){
   const available=(cats||[]).filter(c=>wanted.includes(c.name));
   categoryGrid.innerHTML=available.map((c,i)=>`<a class="category-card" href="products.html?category=${encodeURIComponent(c.name)}"><div class="category-image"><img src="${categoryImages[c.name]||"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20Microscope.jpg"}" alt="${esc(c.name)}"></div><div class="category-content"><span>0${i+1}</span><h3>${esc(c.name)}</h3><p>${esc(c.description||"Explore products in this category.")}</p><strong>Explore products <b>→</b></strong></div></a>`).join("");
  }
- if(categoryFilter){categoryFilter.innerHTML='<button class="active" data-cat="all">All Products</button>'+(cats||[]).map(c=>`<button data-cat="${c.id}">${esc(c.name)}</button>`).join("");categoryFilter.querySelectorAll("button").forEach(b=>b.onclick=()=>{categoryFilter.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.cat==="all"?products:products.filter(p=>p.category_id===b.dataset.cat))})}
+ if(categoryFilter){categoryFilter.style.display="none";categoryFilter.innerHTML='<button class="active" data-cat="all">All Products</button>'+(cats||[]).map(c=>`<button data-cat="${c.id}">${esc(c.name)}</button>`).join("");categoryFilter.querySelectorAll("button").forEach(b=>b.onclick=()=>{categoryFilter.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.cat==="all"?products:products.filter(p=>p.category_id===b.dataset.cat))})}
  render(products||[]);
  if(serviceGrid)serviceGrid.innerHTML=se?( '<div class="empty">Services are temporarily unavailable.</div>'):(services||[]).map(s=>`<article class="service-card"><span class="service-icon">${s.icon||"✦"}</span><h3>${esc(s.name)}</h3><p>${esc(s.description||"")}</p></article>`).join("");
 }
@@ -42,6 +42,11 @@ if(quoteForm)quoteForm.addEventListener("submit",async e=>{
  e.target.reset();status.textContent="Thank you — your request has been received.";
 });
 async function loadInventoryProducts(){
+ if(productCategoryNav){
+  const cats=["All Products","Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
+  productCategoryNav.innerHTML=cats.map((x,i)=>{const active=(new URLSearchParams(location.search).get("category")||"All Products")===x;const image=x==="All Products"?categoryImages["Laboratory Equipment"]:(categoryImages[x]||categoryImages["Laboratory Equipment"]);return `<a class="mini-category ${active?"active":""}" href="products.html${x==="All Products"?"":"?category="+encodeURIComponent(x)}"><img src="${image}" alt="${esc(x)}"><span>${esc(x)}</span><b>→</b></a>`}).join("");
+ }
+
  if(!productGrid||!location.pathname.endsWith("products.html"))return;
  const wanted=new URLSearchParams(location.search).get("category");
  const {data:items,error}=await inventoryDb.from("items").select("id,item_name,brand,model,category,catalog_link").order("item_name");
