@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://oliyadgezahegn25-lab.github.io/outcome-platform/sitemap.xml
