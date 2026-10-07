@@ -46,3 +46,9 @@ body{background:#f3f8f8}
 .modal{border:1px solid #d5e6e5;box-shadow:0 40px 120px rgba(0,0,0,.38)}
 .modal-product-photo{width:100%;max-height:280px;object-fit:contain;background:radial-gradient(circle,#fff,#e8f5f3);border-radius:16px;padding:18px;margin-bottom:18px}
 @media(max-width:560px){.product-visual{height:185px}.hero{min-height:670px}}
+
+.chemical-card .product-visual{background:radial-gradient(circle at 50% 45%,#f5fffe,#dcefed 70%);display:grid;place-items:center}
+.chemical-visual{width:calc(100% - 42px);height:calc(100% - 42px);border:1px solid rgba(12,138,130,.18);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(226,246,243,.75));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#167d75;letter-spacing:2px;position:relative;overflow:hidden}
+.chemical-visual:before,.chemical-visual:after{content:"";position:absolute;border:1px solid rgba(66,221,202,.18);border-radius:50%}
+.chemical-visual:before{width:120px;height:120px}.chemical-visual:after{width:175px;height:175px}
+.chemical-visual span{font-size:8px;font-weight:800;z-index:1}.chemical-visual b{font-size:30px;font-weight:500;z-index:1;text-shadow:0 0 18px rgba(66,221,202,.25)}
