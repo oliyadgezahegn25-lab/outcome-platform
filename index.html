@@ -62,7 +62,20 @@
     <details><summary>How do I request a quotation?<span>+</span></summary><p>Use the contact page and send the product or requirement details you have, including quantity and specification when available.</p></details>
   </div>
 </section>
-</main><footer><div class="footer-bottom"><div><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><b>LABAID TRADING PLC</b></div><div class="footer-links"><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="partners.html">Partners</a></div><span>© 2026 Labaid Trading PLC · Addis Ababa, Ethiopia</span></div></footer>
+</main><div class="labaid-chat" id="labaidChat">
+  <button class="labaid-chat-toggle" id="chatToggle" aria-label="Open Labaid assistant" aria-expanded="false">
+    <span class="chat-pulse"></span><span class="chat-icon">✦</span><span>Ask Labaid</span>
+  </button>
+  <section class="labaid-chat-panel" id="chatPanel" aria-label="Labaid assistant">
+    <div class="chat-head"><div><span class="chat-eyebrow">LABAID ASSISTANT</span><strong>How can we help?</strong><small>Product guidance & requirements</small></div><button id="chatClose" aria-label="Close chat">×</button></div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-message bot">Hello! I'm the Labaid Assistant. I can help you explore equipment, chemicals, and requirements.</div>
+      <div class="chat-quick"><button data-chat="What laboratory equipment do you supply?">Laboratory equipment</button><button data-chat="What chemicals do you supply?">Chemicals</button><button data-chat="I want a quotation">Request a quote</button></div>
+    </div>
+    <form class="chat-input" id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Ask about a product or requirement…" aria-label="Message"><button aria-label="Send message">→</button></form>
+  </section>
+</div>
+<footer><div class="footer-bottom"><div><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><b>LABAID TRADING PLC</b></div><div class="footer-links"><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="partners.html">Partners</a></div><span>© 2026 Labaid Trading PLC · Addis Ababa, Ethiopia</span></div></footer>
 <script>
 (function(){
   const slides=[...document.querySelectorAll('.header-cinema-slide')];
