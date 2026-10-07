@@ -74,26 +74,58 @@ if(quoteForm)quoteForm.addEventListener("submit",async e=>{
 });
 async function loadInventoryProducts(){
  if(!productGrid||!location.pathname.endsWith("products.html"))return;
- const cats=["Laboratory Equipment & Instruments","Laboratory Chemicals & Reagents","Laboratory Supplies & Microbiology"];
+ const cats=["Laboratory Devices & Instruments","Laboratory Chemicals & Reagents"];
  const params=new URLSearchParams(location.search);
  const wanted=params.get("category")||"All Products";
  const searchInput=document.getElementById("productSearch");
  const resultCount=document.getElementById("resultCount");
  const summary=document.getElementById("catalogueSummary");
+
+ const deviceTerms=[
+  "centrifuge","microscope","autoclave","incubator","water bath","dry oven","muffle furnace",
+  "laminar flow","biological safety","biosafety","multimeter","pH meter","ph meter","turbidity",
+  "balance","thermometer","thermohygrometer","barometer","hydrometer","haemometer","heating mantle",
+  "rotary evapor","refrigerator","freezer","water distill","distiller","colony counter","sieve shaker",
+  "ec/tds","tds tester","conductivity","galvano","oscillator","oscilloscope","projector",
+  "electric milk separator","soldering iron","digital display","body fat analyzer","blood pressure",
+  "simulator","water proof ec","meter"
+ ];
+ const isDevice=p=>{
+  const n=(p.name||"").toLowerCase();
+  return (p.category?.name==="Laboratory Equipment & Instruments" &&
+    deviceTerms.some(term=>n.includes(term)) &&
+    !/tube|tip|paper|bottle|flask|beaker|pipette|pippet|glove|gown|mask|bag|syringe|lancet|chart|model|antibiotic|amoxic|ampicillin|cef|doxy|erythromycin|kanamycin|nalidixic|norfloxacin|piperacillin|tetracycline|trimethoprim|vancomycin|injection|saline|lido caine|buffer|reagent|electrode|probe|accessory|cable/.test(n));
+ };
+ const normalize=n=>(n||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
  if(productCategoryNav){
-  productCategoryNav.innerHTML=[["All Products",""],...cats.map(x=>[x,x])].map(([x,v],i)=>`<a class="mini-category ${wanted===x?"active":""}" href="products.html${v?"?category="+encodeURIComponent(v):""}"><span class="mini-category-symbol">${i===0?"◈":i===1?"🔬":i===2?"🧪":"🧫"}</span><span>${esc(x)}</span><b>→</b></a>`).join("");
+  productCategoryNav.innerHTML=[["All Products",""],...cats.map(x=>[x,x])].map(([x,v],i)=>`<a class="mini-category ${wanted===x?"active":""}" href="products.html${v?"?category="+encodeURIComponent(v):""}"><span class="mini-category-symbol">${i===0?"◈":i===1?"⚙":"🧪"}</span><span>${esc(x)}</span><b>→</b></a>`).join("");
  }
  const {data:items,error}=await db.from("products").select("id,name,brand,model,category:product_categories(name),image_url,catalog_url,short_description,description,sort_order").eq("published",true).order("featured",{ascending:false}).order("sort_order");
  if(error){console.error(error);productGrid.innerHTML='<div class="empty"><strong>Catalogue temporarily unavailable.</strong><br>Please contact Labaid directly.</div>';return}
- let products=items||[];
+
+ const seen=new Set();
+ const products=(items||[]).filter(p=>{
+  const cat=p.category?.name||"";
+  if(cat==="Laboratory Chemicals & Reagents")return true;
+  if(!isDevice(p))return false;
+  const key=normalize(p.name);
+  if(!key||seen.has(key))return false;
+  seen.add(key);
+  return true;
+ });
+
  const apply=()=>{
   const q=(searchInput?.value||"").trim().toLowerCase();
-  let filtered=products.filter(p=>wanted==="All Products"||(p.category?.name||"")===wanted);
+  let filtered=products.filter(p=>{
+   const cat=p.category?.name||"";
+   return wanted==="All Products"||(wanted==="Laboratory Devices & Instruments"&&cat==="Laboratory Equipment & Instruments")||(wanted===cat);
+  });
   if(q)filtered=filtered.filter(p=>[p.name,p.brand,p.model,p.short_description,p.description,p.category?.name].filter(Boolean).join(" ").toLowerCase().includes(q));
   if(resultCount)resultCount.textContent=`${filtered.length} product${filtered.length===1?"":"s"} shown`;
-  if(summary)summary.textContent=`${products.length} products in the Labaid catalogue — searchable by product, brand, model and category.`;
+  if(summary)summary.textContent=`${products.length} selected catalogue items — laboratory devices and instruments plus the current chemical range. Supplies and consumables are kept out of this product list.`;
   productGrid.innerHTML=filtered.length?filtered.map(p=>{
-    const cat=p.category?.name||"Product", image=p.image_url||productImages[p.name]||categoryImages[cat];
+    const cat=p.category?.name==="Laboratory Equipment & Instruments"?"Laboratory Devices & Instruments":(p.category?.name||"Product");
+    const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name||cat];
     const meta=[p.brand,p.model].filter(Boolean).join(" · ");
     return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<div class="catalogue-visual"><span>${esc(cat==="Laboratory Chemicals & Reagents"?"CHEMICAL":"LABAID")}</span><b>◈</b></div>`}</div><div class="product-body"><span class="tag">${esc(cat)}</span><h3>${esc(p.name)}</h3>${meta?`<div class="product-meta">${esc(meta)}</div>`:""}<p>${esc(p.short_description||p.description||"Available from Labaid Trading PLC for institutional requirements.")}</p>${p.catalog_url?`<a class="product-link" href="${esc(p.catalog_url)}" target="_blank" rel="noopener">View catalogue →</a>`:""} <a class="product-link" href="contact.html?product=${encodeURIComponent(p.name)}">Request quotation →</a></div></article>`;
   }).join(""):'<div class="empty"><strong>No matching products.</strong><br>Try another search or send the specification to Labaid.</div>';
