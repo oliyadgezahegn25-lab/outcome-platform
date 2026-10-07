@@ -177,3 +177,27 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(max-width:900px){.company-intro{grid-template-columns:1fr;padding:75px 6%}.company-intro-visual{height:360px}.presentation{padding:75px 6%}.presentation-slide{grid-template-columns:1fr}.slide-visual{min-height:220px;padding:26px}.slide-copy{padding:32px}.presentation-stage{min-height:620px}.slide-visual:after{display:none}}
 @media(max-width:560px){.company-intro{padding:65px 20px}.company-intro h1{letter-spacing:-2.4px}.company-contact-row{display:grid;grid-template-columns:1fr}.company-contact-row a,.company-contact-row div{min-width:0}.company-intro-visual{height:300px}.intro-card{width:210px;height:210px}.intro-card strong{font-size:22px}.presentation{padding:65px 20px 75px}.presentation-head{align-items:flex-start;flex-direction:column}.presentation-stage{min-height:690px;border-radius:22px}.slide-visual{min-height:220px}.slide-copy{padding:27px}.slide-copy h3{font-size:27px}.slide-progress{overflow:auto}}
 @media(prefers-reduced-motion:reduce){.presentation-slide{transition:none}}
+
+/* Real equipment imagery for the presentation */
+.slide-lab{
+ background-image:linear-gradient(90deg,rgba(5,27,36,.20),rgba(5,27,36,.78)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Laboratory%20Optical%20Microscope.jpg");
+ background-size:cover;background-position:center 42%;
+}
+.slide-supply{
+ background-image:linear-gradient(90deg,rgba(5,27,36,.18),rgba(5,27,36,.78)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Laboratory%20autoclave.jpg");
+ background-size:cover;background-position:center 48%;
+}
+.slide-services{
+ background-image:linear-gradient(90deg,rgba(5,27,36,.20),rgba(5,27,36,.80)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Microscope%20lab.jpg");
+ background-size:cover;background-position:center 45%;
+}
+.slide-institutions{
+ background-image:linear-gradient(90deg,rgba(5,27,36,.18),rgba(5,27,36,.80)),url("https://commons.wikimedia.org/wiki/Special:FilePath/202002%20Laboratory%20instrument%20microscope.svg");
+ background-size:58%;background-repeat:no-repeat;background-position:center;background-color:#0a3441;
+}
+.slide-contact{
+ background-image:linear-gradient(90deg,rgba(5,27,36,.12),rgba(5,27,36,.82)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Accu-Answer%20blood%20glucose%20meter%20with%20accessories.jpg");
+ background-size:cover;background-position:center 40%;
+}
+.presentation-slide .slide-visual{transition:background-position 7s ease,transform .8s ease}
+.presentation-slide.active .slide-visual{background-position:center 48%}
