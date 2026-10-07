@@ -15,9 +15,9 @@ async function loadProducts(){
  const [{data:cats,error:ce},{data:products,error:pe},{data:services,error:se}]=await Promise.all(queries);
  if(ce||pe){console.error(ce||pe);if(productGrid)productGrid.innerHTML='<div class="empty">Products are temporarily unavailable. Please contact Labaid directly.</div>';return}
  if(categoryGrid){
-  const wanted=["Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
-  const available=(cats||[]).filter(c=>wanted.includes(c.name));
-  categoryGrid.innerHTML=available.map((c,i)=>`<a class="category-card" href="products.html?category=${encodeURIComponent(c.name)}"><div class="category-image"><img src="${categoryImages[c.name]||"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20Microscope.jpg"}" alt="${esc(c.name)}"></div><div class="category-content"><span>0${i+1}</span><h3>${esc(c.name)}</h3><p>${esc(c.description||"Explore products in this category.")}</p><strong>Explore products <b>→</b></strong></div></a>`).join("");
+  const wanted=["All Products","Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
+  const available=wanted.map((name,i)=>name==="All Products"?{name,description:"Browse the complete Labaid product range."}:{...(cats||[]).find(c=>c.name===name),name});
+  categoryGrid.innerHTML=available.map((c,i)=>`<a class="category-card" href="${c.name==="All Products"?"products.html":"products.html?category="+encodeURIComponent(c.name)}"><div class="category-image"><img src="${categoryImages[c.name]||"https://commons.wikimedia.org/wiki/Special:Redirect/file/Laboratory%20Microscope.jpg"}" alt="${esc(c.name)}"></div><div class="category-content"><span>0${i+1}</span><h3>${esc(c.name)}</h3><p>${esc(c.description||"Explore products in this category.")}</p><strong>Explore products <b>→</b></strong></div></a>`).join("");
  }
  if(categoryFilter){categoryFilter.style.display="none";categoryFilter.innerHTML='<button class="active" data-cat="all">All Products</button>'+(cats||[]).map(c=>`<button data-cat="${c.id}">${esc(c.name)}</button>`).join("");categoryFilter.querySelectorAll("button").forEach(b=>b.onclick=()=>{categoryFilter.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.cat==="all"?products:products.filter(p=>p.category_id===b.dataset.cat))})}
  render(products||[]);
