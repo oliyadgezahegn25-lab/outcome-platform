@@ -52,7 +52,7 @@ async function loadProducts(){
  if(categoryGrid){
   const wanted=["Laboratory Equipment","Laboratory Chemicals & Reagents","Research & Scientific Equipment","Medical Equipment"];
   const available=wanted.map((name,i)=>name==="All Products"?{name,description:"Browse the complete Labaid product range."}:{...(cats||[]).find(c=>c.name===name),name});
-  categoryGrid.innerHTML=available.map((c,i)=>`<a class="category-card" href="${c.name==="All Products"?"products.html":"products.html?category="+encodeURIComponent(c.name)}"><div class="category-image">${categoryImages[c.name]?`<img src="${categoryImages[c.name]}" alt="${esc(c.name)}">`:`<div class="category-no-image">CHEMICALS<br><span>Products & Reagents</span></div>`}</div><div class="category-content"><span>0${i+1}</span><h3>${esc(c.name)}</h3><p>${esc(c.description||"Explore products in this category.")}</p><strong>Explore products <b>→</b></strong></div></a>`).join("");
+  categoryGrid.innerHTML=available.map((c,i)=>{const live= c.name==="Laboratory Equipment" ? (cats||[]).find(x=>x.name==="Laboratory Equipment & Instruments") : (cats||[]).find(x=>x.name===c.name); const count=(products||[]).filter(p=>p.category?.name===c.name || (c.name==="Laboratory Equipment"&&p.category?.name==="Laboratory Equipment & Instruments")).length; const displayCount=count?count+" listed":"Explore area"; return `<a class="category-card" href="${c.name==="All Products"?"products.html":"products.html?category="+encodeURIComponent(c.name)}"><div class="category-image">${categoryImages[c.name]?`<img src="${categoryImages[c.name]}" alt="${esc(c.name)}">`:`<div class="category-no-image">CHEMICALS<br><span>Products & Reagents</span></div>`}</div><div class="category-content"><span>0${i+1} · ${count?"LIVE CATALOGUE":"PRODUCT AREA"}</span><h3>${esc(c.name)}</h3><p>${esc(c.description||"Explore products in this category.")}</p><strong><span>${esc(displayCount)}</span><b>→</b></strong></div></a>`}).join("");
  }
  if(categoryFilter){categoryFilter.style.display="none";categoryFilter.innerHTML='<button class="active" data-cat="all">All Products</button>'+(cats||[]).map(c=>`<button data-cat="${c.id}">${esc(c.name)}</button>`).join("");categoryFilter.querySelectorAll("button").forEach(b=>b.onclick=()=>{categoryFilter.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.cat==="all"?products:products.filter(p=>p.category_id===b.dataset.cat))})}
  render(products||[]);
@@ -167,4 +167,55 @@ loadProducts();loadInventoryProducts();
   const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}}),{threshold:.12});
   reveal.forEach(el=>io.observe(el));
  }else reveal.forEach(el=>el.classList.add('is-visible'));
+})();
+
+
+/* === Full experience interactions === */
+(function(){
+ const navMenu=document.querySelector('.nav-menu');
+ navMenu&&navMenu.addEventListener('click',()=>{const open=document.body.classList.toggle('mobile-nav-open');navMenu.setAttribute('aria-expanded',String(open));});
+ document.querySelectorAll('.nav-mega-trigger').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();const wrap=btn.closest('.nav-products-wrap');const open=wrap.classList.toggle('is-open');btn.setAttribute('aria-expanded',String(open));}));
+ document.addEventListener('click',e=>{if(!e.target.closest('.nav-products-wrap'))document.querySelectorAll('.nav-products-wrap.is-open').forEach(w=>w.classList.remove('is-open'));});
+ const intro=document.getElementById('entranceExperience');
+ if(intro){
+   const seen=sessionStorage.getItem('labaid_intro_seen');
+   if(seen)intro.classList.add('is-done');
+   else setTimeout(()=>{intro.classList.add('is-done');sessionStorage.setItem('labaid_intro_seen','1');},1750);
+ }
+})();
+(function(){
+ const searchParams=new URLSearchParams(location.search);
+ const type=searchParams.get('type'); const subject=document.getElementById('subject'); const message=document.getElementById('message');
+ if(subject&&type&&!subject.value) subject.value=type+' requirement';
+ if(subject&&searchParams.get('product')&&!subject.value) subject.value=searchParams.get('product');
+ if(message&&type&&!message.value) message.value='Requirement type: '+type+'\n\nPlease add the specification, quantity, delivery requirement or other details you have.';
+ const quoteChoices=[...document.querySelectorAll('.quote-choice-grid a')];
+ quoteChoices.forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('labaid_quote_type',a.dataset.type||'')}catch(e){}}));
+})();
+
+(function(){
+ const form=document.getElementById('quoteForm'); if(!form)return;
+ const hidden=document.getElementById('requirementType');
+ const buttons=[...document.querySelectorAll('.requirement-types button')];
+ buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(hidden)hidden.value=btn.dataset.type||'';}));
+ const saved=localStorage.getItem('labaid_quote_type');
+ const typeFromUrl=new URLSearchParams(location.search).get('type');
+ const initial=typeFromUrl||saved;
+ if(initial){const btn=buttons.find(b=>b.dataset.type===initial);if(btn){btn.click();}}
+ const qty=document.getElementById('quantity');
+ form.addEventListener('submit',async e=>{
+   e.preventDefault();
+   const status=document.getElementById('formStatus'); if(!status)return;
+   const baseSubject=document.getElementById('subject')?.value.trim()||'General requirement';
+   const selected=hidden?.value||'General';
+   const quantity=qty?.value.trim()||'';
+   let detail=document.getElementById('message')?.value.trim()||'';
+   if(quantity) detail='Quantity: '+quantity+'\n\n'+detail;
+   const payload={name:document.getElementById('name').value.trim(),organization:document.getElementById('organization').value.trim()||null,email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim()||null,subject:'['+selected+'] '+baseSubject,message:detail};
+   status.textContent='Sending your request…';
+   const {error}=await db.from('inquiries').insert(payload);
+   if(error){console.error(error);status.textContent='We couldn’t send the request. Please try again.';return}
+   form.reset();buttons.forEach(b=>b.classList.remove('active'));if(hidden)hidden.value='';status.textContent='Received. Labaid will review the requirement and respond.';
+   localStorage.removeItem('labaid_quote_type');
+ });
 })();
