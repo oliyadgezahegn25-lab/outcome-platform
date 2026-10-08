@@ -143,7 +143,7 @@ loadProducts();loadInventoryProducts();
 (function(){
  const n=document.getElementById('heroShowcaseNumber'),t=document.getElementById('heroShowcaseTitle'),sub=document.getElementById('heroShowcaseSub'),bars=[...document.querySelectorAll('.showcase-progress i')];
  if(!n)return;
- const items=[['01','LABORATORY','EQUIPMENT & SUPPLIES'],['02','SCIENTIFIC','RESEARCH & EQUIPMENT'],['03','MEDICAL','EQUIPMENT & SUPPORT'],['04','TECHNICAL','IT · POWER · INDUSTRIAL']];
+ const items=[['01','LABORATORY','EQUIPMENT & SUPPLIES'],['02','SCIENTIFIC','RESEARCH & EQUIPMENT'],['03','MEDICAL','EQUIPMENT & SUPPORT'],['04','IT & ELECTRICAL','IT · POWER · ELECTRICAL']];
  let i=0; setInterval(()=>{i=(i+1)%items.length; n.textContent=items[i][0];t.textContent=items[i][1];sub.textContent=items[i][2];bars.forEach((b,j)=>b.classList.toggle('active',j===i));},3600);
 })();
 
