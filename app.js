@@ -152,3 +152,19 @@ loadProducts();loadInventoryProducts();
  const cards=[...document.querySelectorAll('.partner-card')];
  cards.forEach((card,i)=>{card.style.setProperty('--partner-delay', (i*90)+'ms');});
 })();
+
+
+/* === Site motion layer === */
+(function(){
+ const progress=document.querySelector('.site-progress span');
+ const updateProgress=()=>{const doc=document.documentElement;const max=doc.scrollHeight-doc.clientHeight;const pct=max>0?(window.scrollY/max)*100:0;if(progress)progress.style.width=pct+'%';};
+ window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+ const root=document.documentElement;
+ window.addEventListener('pointermove',e=>{root.style.setProperty('--mx',e.clientX+'px');root.style.setProperty('--my',e.clientY+'px');},{passive:true});
+ const reveal=[...document.querySelectorAll('.wow-bridge,.presentation,.home-categories,.lab-film,.pathway-wow,.cta-strip,.faq-section')];
+ reveal.forEach(el=>el.classList.add('reveal-ready'));
+ if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}}),{threshold:.12});
+  reveal.forEach(el=>io.observe(el));
+ }else reveal.forEach(el=>el.classList.add('is-visible'));
+})();
