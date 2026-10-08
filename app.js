@@ -154,6 +154,28 @@ loadProducts();loadInventoryProducts();
 })();
 
 
+/* === Section image slideshows === */
+(function(){
+  function cycle(selector,delay){
+    document.querySelectorAll(selector).forEach((wrap,i)=>{
+      const slides=[...wrap.querySelectorAll('img')];
+      if(slides.length<2)return;
+      let n=0;
+      setTimeout(()=>{
+        setInterval(()=>{
+          slides[n].classList.remove('active');
+          slides[n].setAttribute('aria-hidden','true');
+          n=(n+1)%slides.length;
+          slides[n].classList.add('active');
+          slides[n].setAttribute('aria-hidden','false');
+        },delay);
+      },i*700);
+    });
+  }
+  cycle('[data-category-slideshow]',4200);
+  cycle('[data-world-slideshow]',5200);
+})();
+
 /* === Site motion layer === */
 (function(){
  const progress=document.querySelector('.site-progress span');
