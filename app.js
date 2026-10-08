@@ -161,7 +161,7 @@ loadProducts();loadInventoryProducts();
  window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
  const root=document.documentElement;
  window.addEventListener('pointermove',e=>{root.style.setProperty('--mx',e.clientX+'px');root.style.setProperty('--my',e.clientY+'px');},{passive:true});
- const reveal=[...document.querySelectorAll('.wow-bridge,.presentation,.home-categories,.lab-film,.pathway-wow,.cta-strip,.faq-section')];
+ const reveal=[...document.querySelectorAll('.wow-bridge,.presentation,.home-categories,.world-showcase,.lab-film,.pathway-wow,.cta-strip,.faq-section,.audience-wow,.partner-home')];
  reveal.forEach(el=>el.classList.add('reveal-ready'));
  if('IntersectionObserver' in window){
   const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}}),{threshold:.12});
