@@ -417,3 +417,43 @@ body.mobile-nav-open .nav nav{display:flex;position:fixed;left:15px;right:15px;t
   .presentation-intro:after,.section-copy-block:after,.copy-rule{animation:none}
   .category-image-slideshow .category-slide,.world-slideshow .world-slide{transition:none;transform:none}
 }
+
+
+/* Performance and small-screen improvements */
+@media(max-width:700px){
+  .entrance-experience{display:none!important}
+  .nav{height:68px;padding:0 4%;gap:10px}
+  .nav nav{display:none}
+  .nav-menu{display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:42px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+  .nav-cta{padding:11px 12px;font-size:11px;gap:6px;white-space:nowrap}
+  .brand{font-size:14px;gap:7px}
+  .brand-logo{max-width:32px;max-height:32px}
+  .mobile-nav-open .nav nav{display:flex;position:fixed;left:10px;right:10px;top:68px;max-height:calc(100dvh - 82px);overflow-y:auto;flex-direction:column;gap:2px;padding:12px;background:#071a25;border:1px solid rgba(104,226,215,.18);border-radius:14px;box-shadow:0 18px 45px rgba(0,0,0,.22)}
+  .mobile-nav-open .nav nav a,.mobile-nav-open .nav .nav-mega-trigger{color:#fff;padding:13px;text-align:left}
+  .mega-menu{position:static;width:100%;max-width:100%;grid-template-columns:1fr;max-height:65vh;overflow:auto}
+  .header-cinema{min-height:620px}
+  .header-cinema-content{width:100%;padding:90px 6% 42px}
+  .header-cinema-lead{font-size:16px;line-height:1.65}
+  .header-cinema-info{grid-template-columns:1fr;gap:12px}
+  .hero-actions,.cta-strip{align-items:stretch;flex-direction:column}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .product-card{min-width:0}
+  .product-visual{height:145px}
+  .product-body{padding:14px}
+  .product-body h3{font-size:15px;overflow-wrap:anywhere}
+  .product-body p{font-size:12px}
+  .catalogue-tools{gap:12px}
+  .product-category-nav{display:flex;overflow-x:auto;max-width:100%;gap:8px}
+  .mini-category{flex:0 0 auto}
+  img{max-width:100%}
+}
+@media(max-width:380px){
+  .nav-cta{font-size:10px;padding:10px}
+  .brand{font-size:12px}
+  .product-grid{grid-template-columns:1fr}
+  .product-visual{height:190px}
+}
+@media(prefers-reduced-motion:reduce){
+  .entrance-experience,.site-progress,.cursor-spot{display:none!important}
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
