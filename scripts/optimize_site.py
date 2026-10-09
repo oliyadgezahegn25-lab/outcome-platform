@@ -6,10 +6,10 @@ from urllib.parse import quote
 
 ROOT = Path(".")
 OUT = ROOT / "dist"
-SKIP_DIRS = {".git", ".github", "dist", "__pycache__"}
+SKIP_DIRS = {".git", ".github", "dist", "__pycache__", "scripts"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
-MAX_EDGE = 1920
-QUALITY = 78
+MAX_EDGE = 1600
+QUALITY = 74
 
 if OUT.exists():
     shutil.rmtree(OUT)
