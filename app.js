@@ -40,7 +40,7 @@ const categoryImages={
 "Medical Equipment":"https://images.pexels.com/photos/31188648/pexels-photo-31188648.jpeg?auto=compress&cs=tinysrgb&w=1600"
 }
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function card(p){const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name];return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||"Professional equipment and solutions available from Labaid Trading PLC.")}</p><button class="product-link" data-product="${p.id}">View product →</button></div></article>`}
+function card(p){const image=p.image_url||productImages[p.name]||categoryImages[p.category?.name];return `<article class="product-card"><div class="product-visual">${image?`<img class="product-photo" src="${esc(image)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:`<span class="product-symbol">${icons[(p.sort_order||0)%icons.length]}</span>`}</div><div class="product-body"><span class="tag">${esc(p.category?.name||"Product")}</span><h3>${esc(p.name)}</h3><p>${esc(p.short_description||"Professional equipment and solutions available from Labaid Trading PLC.")}</p><button class="product-link" data-product="${p.id}">View product →</button></div></article>`}
 async function loadProducts(){
  const queries=[
   db.from("product_categories").select("*").eq("published",true).order("sort_order"),
@@ -108,9 +108,10 @@ async function loadInventoryProducts(){
  if(error){console.error(error);productGrid.innerHTML='<div class="empty"><strong>Catalogue temporarily unavailable.</strong><br>Please contact Labaid directly.</div>';return}
 
  const seen=new Set();
+ const consumableTerms=/\\b(tube|tips?|pipettes?|pippettes?|petri dishes?|gloves?|masks?|gowns?|syringes?|needles?|lancets?|test strips?|filter paper|blotting paper|weighing paper|labels?|slides?|cover slips?|cuvettes?|bottles?|sample containers?|centrifuge tubes?|microtubes?|swabs?|gauze|bandages?|cotton wool|disposable|single use|consumable|reagent strips?)\\b/i;
  const products=(items||[]).filter(p=>{
   const cat=p.category?.name||"";
-  if(cat==="Laboratory Chemicals & Reagents")return true;
+  if(cat==="Laboratory Chemicals & Reagents")return !consumableTerms.test(p.name||"");
   if(!isDevice(p))return false;
   const key=normalize(p.name);
   if(!key||seen.has(key))return false;
@@ -138,7 +139,7 @@ async function loadInventoryProducts(){
  document.getElementById("clearSearch")?.addEventListener("click",()=>{if(searchInput)searchInput.value="";apply();});
  apply();
 }
-loadProducts();loadInventoryProducts();
+if(location.pathname.endsWith("products.html")){loadInventoryProducts();}else{loadProducts();}
 /* Hero showcase rotation */
 (function(){
  const n=document.getElementById('heroShowcaseNumber'),t=document.getElementById('heroShowcaseTitle'),sub=document.getElementById('heroShowcaseSub'),bars=[...document.querySelectorAll('.showcase-progress i')];
