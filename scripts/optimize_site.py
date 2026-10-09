@@ -2,6 +2,7 @@ from pathlib import Path
 from PIL import Image
 import shutil
 import re
+from urllib.parse import quote
 
 ROOT = Path(".")
 OUT = ROOT / "dist"
@@ -35,7 +36,7 @@ for src in list(OUT.rglob("*")):
     try:
         with Image.open(src) as original:
             original.load()
-            image = original.convert("RGB") if original.mode not in ("RGB", "L") else original.convert("RGB")
+            image = original.convert("RGBA" if "A" in original.getbands() else "RGB")
             image.thumbnail((MAX_EDGE, MAX_EDGE), Image.Resampling.LANCZOS)
             dest = src.with_suffix(".webp")
             image.save(dest, "WEBP", quality=QUALITY, method=6)
@@ -44,6 +45,7 @@ for src in list(OUT.rglob("*")):
         old_name = src.name
         new_name = dest.name
         replacements[old_name] = new_name
+        replacements[quote(old_name)] = quote(new_name)
         src.unlink()
     except Exception as exc:
         print(f"Keeping original image {src}: {exc}")
