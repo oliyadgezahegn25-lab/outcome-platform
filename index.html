@@ -24,9 +24,9 @@
 <main>
 <section class="header-cinema" aria-label="Labaid visual introduction">
   <div class="header-cinema-slides">
-    <div class="header-cinema-slide active" style="background-image:url('header one.jpg')"></div>
-    <div class="header-cinema-slide" style="background-image:url('header two.jpg')"></div>
-    <div class="header-cinema-slide" style="background-image:url('header thre.jpg')"></div>
+    <div class="header-cinema-slide active" style="background-image:url('header one.jpg')" data-bg="header one.jpg"></div>
+    <div class="header-cinema-slide" data-bg="header two.jpg"></div>
+    <div class="header-cinema-slide" data-bg="header thre.jpg"></div>
   </div>
   <div class="header-cinema-overlay"></div>
   <div class="header-cinema-grid"></div>
@@ -174,7 +174,13 @@
   let current=0;
   function show(n){
     current=(n+slides.length)%slides.length;
-    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    slides.forEach((s,i)=>{
+      s.classList.toggle('active',i===current);
+      if(i===current && !s.style.backgroundImage){
+        const image=s.getAttribute('data-bg');
+        if(image) s.style.backgroundImage='url("'+image.replace(/"/g,'%22')+'")';
+      }
+    });
     dots.forEach((d,i)=>d.classList.toggle('active',i===current));
     if(counter) counter.textContent=String(current+1).padStart(2,'0')+' — 03';
   }
