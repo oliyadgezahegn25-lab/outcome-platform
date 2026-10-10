@@ -216,29 +216,151 @@ if(location.pathname.endsWith("products.html")){loadInventoryProducts();}else{lo
  quoteChoices.forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('labaid_quote_type',a.dataset.type||'')}catch(e){}}));
 })();
 
-(function(){
- const form=document.getElementById('quoteForm'); if(!form)return;
- const hidden=document.getElementById('requirementType');
- const buttons=[...document.querySelectorAll('.requirement-types button')];
- buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(hidden)hidden.value=btn.dataset.type||'';}));
- const saved=localStorage.getItem('labaid_quote_type');
- const typeFromUrl=new URLSearchParams(location.search).get('type');
- const initial=typeFromUrl||saved;
- if(initial){const btn=buttons.find(b=>b.dataset.type===initial);if(btn){btn.click();}}
- const qty=document.getElementById('quantity');
- form.addEventListener('submit',async e=>{
-   e.preventDefault();
-   const status=document.getElementById('formStatus'); if(!status)return;
-   const baseSubject=document.getElementById('subject')?.value.trim()||'General requirement';
-   const selected=hidden?.value||'General';
-   const quantity=qty?.value.trim()||'';
-   let detail=document.getElementById('message')?.value.trim()||'';
-   if(quantity) detail='Quantity: '+quantity+'\n\n'+detail;
-   const payload={name:document.getElementById('name').value.trim(),organization:document.getElementById('organization').value.trim()||null,email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim()||null,subject:'['+selected+'] '+baseSubject,message:detail};
-   status.textContent='Sending your request…';
-   const {error}=await db.from('inquiries').insert(payload);
-   if(error){console.error(error);status.textContent='We couldn’t send the request. Please try again.';return}
-   form.reset();buttons.forEach(b=>b.classList.remove('active'));if(hidden)hidden.value='';status.textContent='Received. Labaid will review the requirement and respond.';
-   localStorage.removeItem('labaid_quote_type');
- });
+```javascript
+(function () {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
+
+  const hidden = document.getElementById('requirementType');
+  const buttons = [
+    ...document.querySelectorAll('.requirement-types button')
+  ];
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (hidden) hidden.value = btn.dataset.type || '';
+    });
+  });
+
+  let savedType = '';
+  try {
+    savedType = localStorage.getItem('labaid_quote_type') || '';
+  } catch (err) {}
+
+  const typeFromUrl = new URLSearchParams(location.search).get('type');
+  const initial = typeFromUrl || savedType;
+
+  if (initial) {
+    const selectedButton = buttons.find(
+      btn => btn.dataset.type === initial
+    );
+
+    if (selectedButton) selectedButton.click();
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const status = document.getElementById('formStatus');
+    const submitButton = form.querySelector('[type="submit"]');
+
+    if (!status) return;
+
+    if (!form.reportValidity()) return;
+
+    const name = document.getElementById('name').value.trim();
+    const organization =
+      document.getElementById('organization').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const baseSubject =
+      document.getElementById('subject').value.trim() ||
+      'General requirement';
+    const quantity =
+      document.getElementById('quantity').value.trim();
+    const message =
+      document.getElementById('message').value.trim();
+    const selected = hidden?.value || 'General';
+
+    const subject = '[' + selected + '] ' + baseSubject;
+    const detail = quantity
+      ? 'Quantity: ' + quantity + '\n\n' + message
+      : message;
+
+    const payload = {
+      name,
+      organization: organization || null,
+      email,
+      phone: phone || null,
+      subject,
+      message: detail
+    };
+
+    const emailPayload = {
+      ...payload,
+      organization: organization || '',
+      phone: phone || '',
+      quantity,
+      requirementType: selected,
+      _subject: 'New website enquiry: ' + subject
+    };
+
+    status.textContent = 'Sending your request…';
+
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      const results = await Promise.allSettled([
+        fetch('https://formspree.io/f/xjygrypp', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(emailPayload)
+        }).then(async response => {
+          if (!response.ok) {
+            throw new Error('Email submission failed');
+          }
+          return true;
+        }),
+
+        db.from('inquiries').insert(payload).then(({ error }) => {
+          if (error) throw error;
+          return true;
+        })
+      ]);
+
+      const emailSent = results[0].status === 'fulfilled';
+      const savedToDatabase = results[1].status === 'fulfilled';
+
+      if (!emailSent) {
+        console.error('Formspree submission failed:', results[0].reason);
+      }
+
+      if (!savedToDatabase) {
+        console.error('Supabase submission failed:', results[1].reason);
+      }
+
+      if (emailSent) {
+        form.reset();
+        buttons.forEach(btn => btn.classList.remove('active'));
+        if (hidden) hidden.value = '';
+
+        try {
+          localStorage.removeItem('labaid_quote_type');
+        } catch (err) {}
+
+        status.textContent = savedToDatabase
+          ? 'Your request was sent successfully. Labaid will review it and respond.'
+          : 'Your request was emailed successfully, but could not be saved to the inquiry database.';
+      } else if (savedToDatabase) {
+        status.textContent =
+          'Your request was saved, but the email could not be sent. Please try again or contact labaidtrading@gmail.com.';
+      } else {
+        status.textContent =
+          'We could not send your request. Please try again or contact labaidtrading@gmail.com.';
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      status.textContent =
+        'Something went wrong. Please try again or contact labaidtrading@gmail.com.';
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
 })();
+```
