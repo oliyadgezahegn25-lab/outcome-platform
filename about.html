@@ -1,17 +1,131 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Learn about Labaid Trading PLC and its equipment supply, installation and commissioning capabilities in Ethiopia."><meta name="theme-color" content="#061923"><title>Labaid Trading PLC | About</title><link rel="stylesheet" href="styles.css"></head><body><div class="site-progress" aria-hidden="true"><span></span></div><header class="nav"><a class="brand" href="index.html"><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><span>LABAID <small>TRADING PLC</small></span></a><nav>
-<a  href="index.html">Home</a>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Discover Labaid Trading PLC's history, mission and vision. An Ethiopian importer and distributor of laboratory equipment, chemicals, reagents and specialized supplies.">
+<meta name="theme-color" content="#061923">
+<title>About Labaid Trading PLC | Our Story, Mission & Vision</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* About-page experience: a restrained sci-fi aesthetic that stays consistent with Labaid's existing identity. */
+.about-orbit-hero{position:relative;isolation:isolate;overflow:hidden;min-height:470px;padding:92px 7% 78px;background:radial-gradient(ellipse at 78% 38%,rgba(34,184,168,.18),transparent 34%),linear-gradient(125deg,#04151e,#082b39 58%,#06434a);color:#f5ffff}
+.about-orbit-hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.18;background-image:linear-gradient(rgba(126,232,220,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(126,232,220,.2) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(110deg,#000,transparent 82%)}
+.about-orbit-hero:after{content:"";position:absolute;z-index:-1;width:340px;height:340px;right:8%;top:54px;border:1px solid rgba(92,226,212,.28);border-radius:50%;box-shadow:0 0 0 24px rgba(92,226,212,.035),0 0 0 58px rgba(92,226,212,.025),inset 0 0 65px rgba(34,184,168,.08)}
+.about-orbit-hero .hero-copy{max-width:780px}
+.about-orbit-hero h1{font:800 clamp(42px,6.5vw,78px)/.98 Manrope,sans-serif;letter-spacing:-3.4px;margin:24px 0}
+.about-orbit-hero h1 em{font-style:normal;color:#55dfd0}
+.about-orbit-hero p{max-width:650px;color:#c0d4d9;font-size:16px;line-height:1.8}
+.about-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.about-meta span{border:1px solid rgba(170,235,228,.22);background:rgba(255,255,255,.035);border-radius:999px;padding:10px 14px;font-size:10px;letter-spacing:.9px;color:#d7e9e9}
+.about-section{padding:86px 7%}
+.about-section-head{max-width:760px;margin-bottom:35px}
+.about-section-head h2,.about-values-head h2{font:800 clamp(31px,4vw,49px)/1.06 Manrope,sans-serif;letter-spacing:-2px;margin:14px 0}
+.about-section-head p,.about-history-copy p{color:var(--muted);font-size:14px;line-height:1.85}
+.about-history{display:grid;grid-template-columns:.75fr 1.25fr;gap:58px;align-items:start}
+.about-history-visual{min-height:320px;border-radius:26px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(50,214,196,.19),transparent 30%),linear-gradient(145deg,#061923,#0c3543);border:1px solid rgba(67,192,180,.28);display:grid;place-items:center}
+.about-history-visual:before,.about-history-visual:after{content:"";position:absolute;border:1px solid rgba(85,223,208,.28);border-radius:50%;width:210px;height:210px}
+.about-history-visual:after{width:270px;height:270px;border-style:dashed;opacity:.6}
+.about-history-core{width:126px;height:126px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#123e49,#071d27);border:1px solid rgba(85,223,208,.65);box-shadow:0 0 42px rgba(34,184,168,.13);color:#fff;z-index:1}
+.about-history-core strong{font:800 23px Manrope;letter-spacing:1px}.about-history-core small{font-size:8px;letter-spacing:1.8px;color:#7ce1d5;margin-top:5px}
+.about-history-tag{position:absolute;z-index:2;font-size:9px;letter-spacing:1.2px;color:#a9dcd8}.about-history-tag.tag-top{top:24px;left:24px}.about-history-tag.tag-bottom{right:24px;bottom:24px}
+.about-history-copy h3{font:800 25px/1.2 Manrope;letter-spacing:-.8px;margin:0 0 16px;color:var(--ink)}
+.about-timeline{display:grid;gap:0;margin-top:28px;border-left:1px solid #c7e4e0;padding-left:22px}
+.about-timeline-item{position:relative;padding:0 0 23px}
+.about-timeline-item:last-child{padding-bottom:0}
+.about-timeline-item:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;left:-27px;top:4px;background:#22b8a8;box-shadow:0 0 0 5px #e5f5f2}
+.about-timeline-item b{display:block;font:800 11px Manrope;letter-spacing:1.2px;color:#087d77;margin-bottom:6px}
+.about-timeline-item p{margin:0;font-size:12px;line-height:1.75;color:var(--muted)}
+.about-values{background:#061923;color:#f2fbfb;padding:88px 7%;position:relative;overflow:hidden}
+.about-values:before{content:"";position:absolute;right:-100px;top:-180px;width:480px;height:480px;border:1px solid rgba(85,223,208,.14);border-radius:50%;box-shadow:0 0 0 35px rgba(85,223,208,.025),0 0 0 75px rgba(85,223,208,.018);pointer-events:none}
+.about-values-head{max-width:740px;position:relative}.about-values-head p{color:#a9c0c5;line-height:1.8;font-size:14px;max-width:620px}
+.about-values-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:35px;position:relative}
+.about-value-card{min-height:250px;padding:30px;border:1px solid rgba(152,218,212,.18);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.02));position:relative;overflow:hidden}
+.about-value-card:after{content:"";position:absolute;right:-45px;bottom:-75px;width:170px;height:170px;border:1px solid rgba(85,223,208,.18);border-radius:50%;box-shadow:0 0 0 18px rgba(85,223,208,.025)}
+.about-value-number{font-size:10px;letter-spacing:2px;color:#55dfd0}
+.about-value-card h3{font:800 clamp(25px,3vw,36px)/1.1 Manrope;letter-spacing:-1.3px;margin:27px 0 13px}
+.about-value-card p{max-width:520px;color:#b4c8cd;font-size:13px;line-height:1.85;margin:0;position:relative;z-index:1}
+.about-value-card .value-line{height:2px;width:48px;background:#31c8b7;margin-top:24px}
+.about-range{padding:78px 7%;background:#fff}
+.about-range-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.about-range-item{border:1px solid var(--line);border-radius:17px;padding:23px 20px;min-height:150px;background:linear-gradient(145deg,#fff,#f6fbfa)}
+.about-range-item span{font-size:9px;color:var(--accent);letter-spacing:1.4px;font-weight:800}
+.about-range-item h3{font:800 15px Manrope;margin:18px 0 8px}
+.about-range-item p{font-size:11px;line-height:1.65;color:var(--muted);margin:0}
+@media(max-width:800px){.about-orbit-hero{padding:74px 6% 62px}.about-orbit-hero:after{right:-180px;opacity:.55}.about-section,.about-values,.about-range{padding:65px 6%}.about-history{grid-template-columns:1fr;gap:30px}.about-history-visual{min-height:260px}.about-values-grid{grid-template-columns:1fr}.about-range-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.about-orbit-hero h1{letter-spacing:-2.3px}.about-meta{gap:7px}.about-meta span{font-size:9px}.about-range-grid{grid-template-columns:1fr}.about-value-card{padding:25px;min-height:220px}}
+</style>
+</head>
+<body>
+<div class="site-progress" aria-hidden="true"><span></span></div>
+<header class="nav">
+<a class="brand" href="index.html"><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><span>LABAID <small>TRADING PLC</small></span></a>
+<nav>
+<a href="index.html">Home</a>
 <div class="nav-products-wrap">
-  <button class="nav-mega-trigger" type="button" aria-expanded="false">Products <span>⌄</span></button>
-  <div class="mega-menu" aria-label="Product categories">
-    <div class="mega-intro"><span class="eyebrow small">Labaid catalogue</span><strong>Explore the supply universe.</strong><p>Browse selected equipment and chemicals, then move directly to the live catalogue.</p><a href="products.html">Open full catalogue <span>→</span></a></div>
-    <div class="mega-links">
-      <a href="products.html?category=Laboratory%20Devices%20%26%20Instruments"><span class="mega-icon">⌬</span><strong>Laboratory</strong><small>Equipment & instruments</small></a>
-      <a href="products.html?category=Laboratory%20Chemicals%20%26%20Reagents"><span class="mega-icon">◌</span><strong>Chemicals</strong><small>Reagents & laboratory chemicals</small></a>
-      <a href="products.html"><span class="mega-icon">◈</span><strong>Scientific</strong><small>Research & measurement</small></a>
-      <a href="products.html"><span class="mega-icon">✚</span><strong>Medical</strong><small>Clinical & healthcare equipment</small></a>
-    </div>
-    <div class="mega-live"><span>LIVE</span><strong id="megaLiveCount">363</strong><small>published catalogue items</small></div>
-  </div>
+<button class="nav-mega-trigger" type="button" aria-expanded="false">Products <span>⌄</span></button>
+<div class="mega-menu" aria-label="Product categories">
+<div class="mega-intro"><span class="eyebrow small">Labaid catalogue</span><strong>Explore the supply universe.</strong><p>Browse selected equipment and chemicals, then move directly to the live catalogue.</p><a href="products.html">Open full catalogue <span>→</span></a></div>
+<div class="mega-links">
+<a href="products.html?category=Laboratory%20Devices%20%26%20Instruments"><span class="mega-icon">⌬</span><strong>Laboratory</strong><small>Equipment &amp; instruments</small></a>
+<a href="products.html?category=Laboratory%20Chemicals%20%26%20Reagents"><span class="mega-icon">◌</span><strong>Chemicals</strong><small>Reagents &amp; laboratory chemicals</small></a>
+<a href="products.html"><span class="mega-icon">◈</span><strong>Scientific</strong><small>Research &amp; measurement</small></a>
+<a href="products.html"><span class="mega-icon">✚</span><strong>Medical</strong><small>Clinical &amp; healthcare equipment</small></a>
 </div>
-<a href="services.html">Services</a><a href="partners.html">Partners</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a>
-</nav><button class="nav-menu" aria-label="Open menu" aria-expanded="false">☰</button><a class="nav-cta" href="contact.html">Request a Quote <span>→</span></a></header><main><section class="page-hero"><div class="hero-copy"><div class="eyebrow"><span></span> LABAID TRADING PLC</div><h1>A practical partner for <em>equipment requirements.</em></h1><p>Labaid Trading PLC supplies laboratory, scientific, medical, IT and electrical equipment, with support around sourcing, procurement, installation and equipment use.</p></div></section><section class="page-section"><div class="sector-intro"><span class="eyebrow small">01 · About Labaid</span><h2>We connect a requirement with a practical supply path.</h2><p>Our approach is straightforward: understand what the organization needs, identify suitable products, communicate the relevant information clearly and coordinate the supply process.</p></div><div class="sector-grid"><div><span>01</span><strong>Equipment supply</strong><p>Laboratory, scientific, medical, IT and electrical equipment for institutional requirements.</p></div><div><span>02</span><strong>Requirement-led sourcing</strong><p>Product identification based on specifications, quantities, application and procurement needs.</p></div><div><span>03</span><strong>Installation &amp; commissioning</strong><p>Installation, setup, commissioning and product-related support where applicable.</p></div><div><span>04</span><strong>Institutional support</strong><p>Structured quotation, documentation and equipment supply for organizations and projects.</p></div></div></section><section class="dark-info-section"><div><span class="eyebrow small">02 · Our scope</span><h2>Different equipment environments. One clear approach.</h2><p>We support organizations that need dependable equipment and clear communication around their requirements.</p></div><div class="focus-list"><div><b>LABORATORY</b><span>Chemicals, reagents, instruments & supplies</span></div><div><b>SCIENTIFIC</b><span>Research and measurement equipment</span></div><div><b>MEDICAL</b><span>Clinical and healthcare equipment</span></div><div><b>IT &amp; ELECTRICAL</b><span>IT, electrical and related equipment</span></div></div></section><section class="cta-strip"><div><span class="eyebrow small">03 · Work with us</span><h2>Start with the requirement, not the product list.</h2><p>Send us the specification or item list and we can review the next step.</p></div><a class="primary" href="contact.html">Contact Labaid <span>→</span></a></section></main><footer><div class="footer-bottom"><div><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><b>LABAID TRADING PLC</b></div><div class="footer-links"><a href="index.html">Home</a><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></div><span>© 2026 Labaid Trading PLC · Addis Ababa, Ethiopia</span></div></footer><script src="app.js"></script></body></html>
+<div class="mega-live"><span>LIVE</span><strong id="megaLiveCount">363</strong><small>published catalogue items</small></div>
+</div>
+</div>
+<a href="services.html">Services</a><a href="partners.html">Partners</a><a href="who-we-serve.html">Who We Serve</a><a class="active" href="about.html">About</a><a href="contact.html">Contact</a>
+</nav>
+<button class="nav-menu" aria-label="Open menu" aria-expanded="false">☰</button><a class="nav-cta" href="contact.html">Request a Quote <span>→</span></a>
+</header>
+<main>
+<section class="about-orbit-hero">
+<div class="hero-copy">
+<div class="eyebrow"><span></span> OUR STORY · EST. 2017</div>
+<h1>Built on purpose.<br><em>Focused on progress.</em></h1>
+<p>Labaid Trading PLC is an Ethiopian private limited company based in Addis Ababa. We connect organizations across Ethiopia with laboratory and specialized products that support research, education and professional work.</p>
+<div class="about-meta"><span>ADDIS ABABA · ETHIOPIA</span><span>ESTABLISHED JANUARY 2017</span><span>INSTITUTIONAL SUPPLY</span></div>
+</div>
+</section>
+<section class="about-section">
+<div class="about-history">
+<div class="about-history-visual" aria-label="Labaid Trading PLC company identity graphic">
+<span class="about-history-tag tag-top">LABAID / COMPANY PROFILE</span>
+<div class="about-history-core"><strong>LABAID</strong><small>TRADING PLC</small></div>
+<span class="about-history-tag tag-bottom">ADDIS ABABA · ETHIOPIA</span>
+</div>
+<div class="about-history-copy">
+<div class="about-section-head"><span class="eyebrow small">01 · OUR JOURNEY</span><h2>From a focused beginning to a wider supply network.</h2></div>
+<p>Established in January 2017 with modest resources and a committed team, Labaid Trading PLC has expanded the scope of its business over the years. We have developed connections with overseas manufacturers, helping bring their products to the Ethiopian market.</p>
+<p>Today, Labaid Trading PLC is an importer and distributor of laboratory equipment, chemicals and reagents for universities, educational institutions and research centres throughout Ethiopia. Our wider product interests also include agricultural products and teaching-aid materials.</p>
+<div class="about-timeline">
+<div class="about-timeline-item"><b>JANUARY 2017 · THE BEGINNING</b><p>The company was established in Addis Ababa with a focus on building a dependable supply business.</p></div>
+<div class="about-timeline-item"><b>GROWTH · EXPANDING OUR REACH</b><p>Our business activities broadened, and we opened market access for products from overseas manufacturers.</p></div>
+<div class="about-timeline-item"><b>TODAY · SUPPORTING INSTITUTIONS</b><p>We continue to serve organizations looking for laboratory, research and specialized products in Ethiopia.</p></div>
+</div>
+</div>
+</div>
+</section>
+<section class="about-values">
+<div class="about-values-head"><span class="eyebrow small">02 · WHAT GUIDES US</span><h2>Our direction is clear.<br><em>Quality, access and progress.</em></h2><p>We aim to make quality products more accessible through responsible pricing, customer-focused service and a long-term commitment to the institutions and professionals we serve.</p></div>
+<div class="about-values-grid">
+<article class="about-value-card"><span class="about-value-number">01 / MISSION</span><h3>Make quality products accessible.</h3><p>Our mission is to commercialize quality products through tender business and direct-market channels, making them accessible at responsible prices. Customer satisfaction is a priority as we work to remain a preferred partner in our field.</p><div class="value-line"></div></article>
+<article class="about-value-card"><span class="about-value-number">02 / VISION</span><h3>Grow with impact, in Ethiopia and beyond.</h3><p>Our vision is to become a leading, reputable and prominent organization in Ethiopia and beyond—contributing to improved quality of life while building a sustainable and financially strong company.</p><div class="value-line"></div></article>
+</div>
+</section>
+<section class="about-range">
+<div class="about-section-head"><span class="eyebrow small">03 · OUR PRODUCT FOCUS</span><h2>Specialized supply for real-world needs.</h2><p>Our product range reflects the needs of the institutions, education and research environments we serve.</p></div>
+<div class="about-range-grid">
+<div class="about-range-item"><span>01 / LABORATORY</span><h3>Equipment &amp; instruments</h3><p>Laboratory equipment, instruments and related supplies.</p></div>
+<div class="about-range-item"><span>02 / CHEMICALS</span><h3>Chemicals &amp; reagents</h3><p>Laboratory chemicals and reagents for research and educational use.</p></div>
+<div class="about-range-item"><span>03 / AGRICULTURE</span><h3>Agricultural products</h3><p>Products supporting agricultural and related requirements.</p></div>
+<div class="about-range-item"><span>04 / EDUCATION</span><h3>Teaching aids</h3><p>Materials that support teaching, learning and practical instruction.</p></div>
+</div>
+</section>
+<section class="cta-strip"><div><span class="eyebrow small">04 · WORK WITH US</span><h2>Have a product or institutional requirement?</h2><p>Share your specifications or item list and we can discuss the next step.</p></div><a class="primary" href="contact.html">Contact Labaid <span>→</span></a></section>
+</main>
+<footer><div class="footer-bottom"><div><img class="brand-logo" src="labaid-logo.svg" alt="Labaid Trading PLC logo"><b>LABAID TRADING PLC</b></div><div class="footer-links"><a href="index.html">Home</a><a href="products.html">Products</a><a href="services.html">Services</a><a href="who-we-serve.html">Who We Serve</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></div><span>© 2026 Labaid Trading PLC · Addis Ababa, Ethiopia</span></div></footer>
+<script src="app.js"></script>
+</body>
+</html>
