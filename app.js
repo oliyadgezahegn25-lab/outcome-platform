@@ -203,7 +203,11 @@ if(location.pathname.endsWith("products.html")){loadInventoryProducts();}else{lo
  if(intro){
    const seen=sessionStorage.getItem('labaid_intro_seen');
    if(seen)intro.classList.add('is-done');
-   else setTimeout(()=>{intro.classList.add('is-done');sessionStorage.setItem('labaid_intro_seen','1');},1750);
+   else {
+     const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+     const introDuration=reduceMotion?1200:4200;
+     setTimeout(()=>{intro.classList.add('is-done');sessionStorage.setItem('labaid_intro_seen','1');},introDuration);
+   }
  }
 })();
 (function(){
