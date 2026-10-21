@@ -623,3 +623,39 @@ body.mobile-nav-open .nav nav{display:flex;position:fixed;left:15px;right:15px;t
 @keyframes readoutReveal{to{opacity:.82}}
 @media(max-width:700px){.lab-microscope{left:-6%;top:39%;width:clamp(105px,29vw,160px);opacity:.42!important}.lab-flask{right:-5%;top:40%;width:clamp(85px,23vw,130px);opacity:.48!important}.lab-molecule{width:70vw;height:70vw;top:44%;opacity:.4}.lab-readout{bottom:20%;width:100%;white-space:normal}.lab-readout strong{font-size:6px;letter-spacing:1px}.entrance-mark{margin-top:-12px}.entrance-mark em{max-width:280px;line-height:1.8;margin-left:auto;margin-right:auto}.instrument-label,.instrument-base{font-size:6px;letter-spacing:1px}}
 @media(prefers-reduced-motion:reduce){.lab-instrument,.lab-molecule,.lab-readout{animation:none;opacity:.55;translate:0 0}}
+
+
+/* === Labaid horizontal navigation improvements === */
+/* Product-area cards form a sideways rail while the page itself remains vertically scrollable. */
+.home-categories .category-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 18px;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 4px 22px;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(74,205,194,.7) rgba(125,155,165,.14);
+}
+.home-categories .category-grid > * {
+  flex: 0 0 clamp(250px, 29vw, 350px);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.home-categories .category-grid::-webkit-scrollbar { height: 9px; }
+.home-categories .category-grid::-webkit-scrollbar-track {
+  background: rgba(125,155,165,.14);
+  border-radius: 99px;
+}
+.home-categories .category-grid::-webkit-scrollbar-thumb {
+  background: rgba(74,205,194,.7);
+  border-radius: 99px;
+}
+@media (max-width: 560px) {
+  .home-categories .category-grid > * { flex-basis: 82%; }
+}
